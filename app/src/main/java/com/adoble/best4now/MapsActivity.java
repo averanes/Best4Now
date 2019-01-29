@@ -1,15 +1,21 @@
 package com.adoble.best4now;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.adoble.best4now.domain.Place;
+import com.adoble.best4now.ui.Permissions;
 import com.adoble.best4now.ui.ShowPlaceOnMap;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,11 +23,13 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -57,9 +65,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+    @SuppressLint("MissingPermission")
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+
+
+        if (Permissions.checkOrAskPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, Permissions.location_permission)) {
+            mMap.setMyLocationEnabled(true);
+        }
+
 
         // Add a marker in Sydney and move the camera
         /*LatLng sydney = new LatLng(-34, 151);
@@ -99,6 +115,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.getUiSettings().setMapToolbarEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
+//para cuando se de clic en un elemento que se muestre en el centro del mapa
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                marker.showInfoWindow();
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
+                return true;
+            }
+        });
 
     }
 
@@ -124,6 +149,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
 
             } catch (IOException e) {
+                e.printStackTrace();
+                // handle the exception
+            }catch (Exception e) {
                 e.printStackTrace();
                 // handle the exception
             }
@@ -186,8 +214,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
+    @SuppressLint("MissingPermission")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
 
+
+        for (int i = 0; i < permissions.length; i++) {
+            if(grantResults[i] == PackageManager.PERMISSION_DENIED){
+                return;
+            }
+        }
+
+        if(requestCode == Permissions.location_permission){
+            mMap.setMyLocationEnabled(true);
+        }
+    }
 }
 
 
