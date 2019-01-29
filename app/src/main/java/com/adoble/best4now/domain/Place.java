@@ -1,7 +1,18 @@
 package com.adoble.best4now.domain;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
+import android.graphics.Paint;
+
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +25,7 @@ public class Place {
     private String place_id;
     private List<String> types;
     private String vicinity;
+    private Bitmap bmpIcon;
 
 
     public Place(LatLng location, String icon, String id, String name, String place_id, String vicinity) {
@@ -26,6 +38,24 @@ public class Place {
         this.types = new ArrayList<String>();
     }
 
+
+    public void loadIconBitmap(){
+
+        if(bmpIcon!= null) return;
+
+        URL url = null;
+        try {
+            url = new URL(icon);
+            bmpIcon = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            bmpIcon = Bitmap.createScaledBitmap(bmpIcon, (int)(bmpIcon.getWidth()*1.5F), (int)(bmpIcon.getHeight()*1.5F), false);
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public LatLng getLocation() {
         return location;
@@ -85,5 +115,9 @@ public class Place {
 
     public void setVicinity(String vicinity) {
         this.vicinity = vicinity;
+    }
+
+    public Bitmap getBmpIcon() {
+        return bmpIcon;
     }
 }

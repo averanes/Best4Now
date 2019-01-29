@@ -1,38 +1,38 @@
 package com.adoble.best4now;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
-import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.adoble.best4now.domain.Place;
+import com.adoble.best4now.ui.ShowPlaceOnMap;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.time.Clock;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private static GoogleMap mMap;
+    public static GoogleMap mMap;
+
+    private int radius = 500;
+    private String language="en";
+    private LatLng location;
+    private String nameOfLocation ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +67,46 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
 
 
+       boolean result = showPlaceAndNearbyPlaces("University of Calabria");
+
+
+
+           if(this.location == null){
+               this.location = new LatLng(39.362136,16.226346);
+           }
+
+           MarkerOptions mo= new MarkerOptions().position(this.location);
+           if(this.nameOfLocation.isEmpty())
+           mo.title(this.nameOfLocation);
+
+           mMap.addMarker(mo);
+
+
+           mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(this.location,
+                   19F), 3000, null);
+
+           /*mMap.moveCamera(CameraUpdateFactory.newLatLng(this.location));
+           mMap.moveCamera(CameraUpdateFactory.zoomTo(19F));*/
+
+
+
+
+
+           searchNearbyPlaces();
+
+
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.getUiSettings().setMapToolbarEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+
+
+    }
+
+    public boolean showPlaceAndNearbyPlaces(String location){
 
         if(Geocoder.isPresent()){
             try {
-                String location = "Italy Calabria Cosenza";
+
                 Geocoder gc = new Geocoder(this);
                 List<Address> addresses= gc.getFromLocationName(location, 5); // get the found Address Objects
 
@@ -83,31 +119,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
 
                 if(ll.size() > 0){
-                    LatLng localization = ll.get(0);
-                    mMap.addMarker(new MarkerOptions().position(localization).title(location));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(localization));
-                    mMap.moveCamera(CameraUpdateFactory.zoomTo(19F));
-                   // Log.d("********LOCATION***** ",);
-                   // mMap.setCam
-
-                    getLocation(localization);
+                    this.location = ll.get(0);
+                    return true;
                 }
 
             } catch (IOException e) {
+                e.printStackTrace();
                 // handle the exception
             }
         }
 
-
-        mMap.getUiSettings().setZoomControlsEnabled(true);
-
-
-
-
+        return false;
     }
 
-
-    public static void showPlacesInMap(){
+    public static void showPlacesNameInMap(){
 
         for(int i = 0; i< PlaceRequest.places.size(); i++){
             Place p = PlaceRequest.places.get(i);
@@ -126,11 +151,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
+
+    public static void showPlacesInMap(){
+
+        for(int i = 0; i< PlaceRequest.places.size(); i++){
+            Place p = PlaceRequest.places.get(i);
+            new ShowPlaceOnMap().execute(p);
+        }
+
+
+    }
+
+
     @SuppressLint("MissingPermission")
-    public void getLocation(LatLng location){
+    public void searchNearbyPlaces(){
 
 
-        String url = PlaceRequest.PLACES_REQUEST + "&radius=500&location=" + location.latitude + "," + location.longitude;
+        String url = PlaceRequest.PLACES_REQUEST + "&radius="+radius+"&language="+language+"&location=" + location.latitude + "," + location.longitude;
         new PlaceRequest(this).execute(url);
     }
 

@@ -24,7 +24,7 @@ public class PlaceRequest extends AsyncTask<String, Integer, JSONArray> {
 
     public static String PLACES_REQUEST = "";
     public static String nextPageToken="";
-    public static int requestCount = 0, REQUEST_LIMIT = 100;
+    public static int requestCount = 0, REQUEST_LIMIT = 2;
 
     public Context context;
 
@@ -41,9 +41,9 @@ public class PlaceRequest extends AsyncTask<String, Integer, JSONArray> {
     protected void onPreExecute() {
         super.onPreExecute();
 
-        progressBar = new ProgressDialog(context);
+        /*progressBar = new ProgressDialog(context);
         progressBar.setIndeterminate(true);
-        progressBar.show();
+        progressBar.show();*/
 
         places = new ArrayList<Place>();
     }
@@ -79,7 +79,7 @@ public class PlaceRequest extends AsyncTask<String, Integer, JSONArray> {
 
     @Override
     protected void onPostExecute(JSONArray jsonArray) {
-        if(progressBar!=null)progressBar.cancel(); //setVisibility(View.GONE);
+        //if(progressBar!=null)progressBar.cancel(); //setVisibility(View.GONE);
         requestCount++;
         try {
             for (int i = 0; i < jsonArray.length(); i++) {
