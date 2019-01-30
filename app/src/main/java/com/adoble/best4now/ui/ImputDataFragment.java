@@ -104,6 +104,8 @@ public class ImputDataFragment extends Fragment {
 
         if(MainActivity.weather != null){
             ((ImageView) view.findViewById(R.id.imageView)).setImageResource(WeatherRequest.getIconByWeatherHorary(MainActivity.mainActivity, MainActivity.weather.getWeatherConsideration(), 1));
+
+
         }
 
 
