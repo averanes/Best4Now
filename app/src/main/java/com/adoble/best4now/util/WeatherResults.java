@@ -52,7 +52,7 @@ public class WeatherResults {
 
     // pronostico del tiempo actual
     public void currentWeather(LatLng latLng, Context context) {
-        String fullCurrentUrl = basicUrl + currentUrl + "lat=" + latLng.latitude + "&lon=" + latLng.longitude + "&appid" + context.getString(R.string.open_weather_map_key);
+        String fullCurrentUrl = basicUrl + currentUrl + "lat=" + latLng.latitude + "&lon=" + latLng.longitude + "&appid=" + context.getString(R.string.open_weather_map_key);
 
         try {
             URL url = new URL(fullCurrentUrl);
