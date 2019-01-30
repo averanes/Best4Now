@@ -33,8 +33,7 @@ public class WeatherResults {
     public WeatherResults() {
     }
 
-
-    // https://samples.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=ce2ed02687e124b11c4a3a8eb72eb60b
+    // pronostico del tiempo actual
     public void currentWeather(double latitude, double longitude, Context context) {
         String fullCurrentUrl = basicUrl + currentUrl + "lat=" + latitude + "&lon=" + longitude + "&appid" + context.getString(R.string.open_weather_map_key);
 
@@ -67,6 +66,7 @@ public class WeatherResults {
                 }
                 if (jsonWeather.has("id")) {
                     currentWeather.setId(jsonWeather.getInt("id"));
+                    this.currentWeather.setWeatherConsideration(this.weatherConsideration(this.currentWeather.getId()));
                 }
                 if (jsonWeather.has("icon")) {
                     currentWeather.setIcon(jsonWeather.getString("icon"));
@@ -79,6 +79,7 @@ public class WeatherResults {
                 if (jsonMain.has("temp")) {
                     // esta temperatura se obtiene en Kelvin como medida, para llevarla a Celsius se le debe restar 273.15
                     currentWeather.setTemperature(jsonMain.getDouble("temp") - 273.15);
+                    this.currentWeather.setTemperatureConsideration(this.temperatureConsideration(this.currentWeather.getTemperature()));
                 }
             }
 
@@ -91,7 +92,8 @@ public class WeatherResults {
         }
     }
 
-    public void pronosticsWeather(double latitude, double longitude, Context context) {
+    // llena una lista con el pronostico del tiempo de los siguientes 10 dias
+    public void dailyWeather(double latitude, double longitude, Context context) {
 
         String fullDailyUrl = WeatherResults.basicUrl + WeatherResults.dailyURL + "lat=" + latitude + "&lon=" + longitude + "&appid" + context.getString(R.string.open_weather_map_key);
 
@@ -138,6 +140,7 @@ public class WeatherResults {
                         }
                         if (jsonWeather.has("id")) {
                             weather.setId(jsonWeather.getInt("id"));
+                            weather.setWeatherConsideration(this.weatherConsideration(weather.getId()));
                         }
                         if (jsonWeather.has("icon")) {
                             weather.setIcon(jsonWeather.getString("icon"));
@@ -150,6 +153,7 @@ public class WeatherResults {
 
                         if (jsonTemp.has("day")) {
                             weather.setTemperature(jsonTemp.getLong("day"));
+                            weather.setTemperatureConsideration(this.temperatureConsideration(weather.getTemperature()));
                         }
                     }
 
@@ -161,5 +165,42 @@ public class WeatherResults {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+
+    private int temperatureConsideration(double temperature) {
+        int tempConsideration = -2;
+        if (temperature <= 0) {
+            tempConsideration = -1;
+        }
+        if (temperature > 0 && temperature <= 15) {
+            tempConsideration = 0;
+        }
+        if (temperature > 15 && temperature <= 25) {
+            tempConsideration = 1;
+        }
+        if (temperature > 25) {
+            tempConsideration = 2;
+        }
+        return tempConsideration;
+    }
+
+    private int weatherConsideration(int idWeather) {
+        int weatConsideration = 4; // inicializado por default en catastrofe
+
+        if ((idWeather + "").charAt(0) == 8) {
+            weatConsideration = 0;
+        }
+        if ((idWeather + "").charAt(0) == 3) {
+            weatConsideration = 1;
+        }
+        if ((idWeather + "").charAt(0) == 5) {
+            weatConsideration = 2;
+        }
+        if ((idWeather + "").charAt(0) == 6) {
+            weatConsideration = 3;
+        }
+
+        return weatConsideration;
     }
 }
