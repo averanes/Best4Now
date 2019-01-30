@@ -1,6 +1,9 @@
 package com.adoble.best4now.domain;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Weather {
 
@@ -30,6 +33,10 @@ public class Weather {
 
     private int weatherConsideration;
     private int temperatureConsideration;
+
+
+
+    private int horarioConsideration;
 
 
     public Weather() {
@@ -80,6 +87,32 @@ public class Weather {
     }
 
     public void setDay(Timestamp day) {
+
+
+        GregorianCalendar gCalendar = new GregorianCalendar();
+        gCalendar.setTimeInMillis(day.getTime());
+        int hour = gCalendar.get(Calendar.HOUR_OF_DAY);
+
+        // mañana
+        if (hour >= 7 && hour < 12){
+            this.horarioConsideration = 0;
+        }
+
+        // tarde
+        if (hour >= 12 && hour < 7){
+            this.horarioConsideration = 1;
+        }
+
+        // noche
+        if (hour >= 7 && hour < 12){
+            this.horarioConsideration = 2;
+        }
+
+        // madrugada
+        if (hour >= 0 && hour < 7){
+            this.horarioConsideration = 3;
+        }
+
         this.day = day;
     }
 
@@ -97,5 +130,13 @@ public class Weather {
 
     public void setTemperatureConsideration(int temperatureConsideration) {
         this.temperatureConsideration = temperatureConsideration;
+    }
+
+    public int getHorarioConsideration() {
+        return horarioConsideration;
+    }
+
+    public void setHorarioConsideration(int horarioConsideration) {
+        this.horarioConsideration = horarioConsideration;
     }
 }
