@@ -1,12 +1,11 @@
 package com.adoble.best4now.util;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
 
 import com.adoble.best4now.domain.Place;
-import com.adoble.best4now.ui.MapsActivity;
+import com.adoble.best4now.ui.MapsFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
@@ -16,25 +15,23 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 public class PlaceRequest extends AsyncTask<String, Integer, JSONArray> {
 
     public static String PLACES_REQUEST = "";
     public static String nextPageToken="";
-    public static int requestCount = 0, REQUEST_LIMIT = 2;
+    public static int requestCount = 0, REQUEST_LIMIT = 1;
 
     public Context context;
 
-    public static List<Place> places;
+
 
 
     public PlaceRequest(Context context){
         this.context = context;
 
     }
-    ProgressDialog progressBar;
+    //ProgressDialog progressBar;
 
     @Override
     protected void onPreExecute() {
@@ -44,7 +41,7 @@ public class PlaceRequest extends AsyncTask<String, Integer, JSONArray> {
         progressBar.setIndeterminate(true);
         progressBar.show();*/
 
-        places = new ArrayList<Place>();
+
     }
 
     @Override
@@ -99,7 +96,7 @@ public class PlaceRequest extends AsyncTask<String, Integer, JSONArray> {
                     p.setType(types.getString(j));
                 }
 
-                places.add(p);
+                MapsFragment.places.add(p);
 
             }
             //clusterManager.cluster();
@@ -107,7 +104,7 @@ public class PlaceRequest extends AsyncTask<String, Integer, JSONArray> {
             e.printStackTrace();
         }
 
-        MapsActivity.showPlacesInMap();
+        MapsFragment.showPlacesInMap();
 
         if (requestCount < REQUEST_LIMIT && !nextPageToken.equals("")) {
            // progressBar.setVisibility(View.VISIBLE);

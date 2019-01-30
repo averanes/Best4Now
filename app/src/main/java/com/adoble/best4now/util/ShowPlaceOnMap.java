@@ -3,8 +3,9 @@ package com.adoble.best4now.util;
 import android.os.AsyncTask;
 
 import com.adoble.best4now.domain.Place;
-import com.adoble.best4now.ui.MapsActivity;
+import com.adoble.best4now.ui.MapsFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class ShowPlaceOnMap extends AsyncTask<Place, Integer, Place>
@@ -33,11 +34,13 @@ public class ShowPlaceOnMap extends AsyncTask<Place, Integer, Place>
 
         super.onPostExecute(place);
 
-        MapsActivity.mMap.addMarker(new MarkerOptions()
+        Marker marker = MapsFragment.mMap.addMarker(new MarkerOptions()
                 .position(place.getLocation())
                 .title(place.getName())
                 //.snippet("Bangalore")
                 .icon(BitmapDescriptorFactory.fromBitmap(place.getBmpIcon()) ));
+
+        place.setMarker(marker);
 
     }
 

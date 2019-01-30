@@ -2,13 +2,9 @@ package com.adoble.best4now.domain;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
-import android.graphics.Paint;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -27,6 +23,8 @@ public class Place {
     private String vicinity;
     private Bitmap bmpIcon;
 
+    private Marker marker;
+
 
     public Place(LatLng location, String icon, String id, String name, String place_id, String vicinity) {
         this.location = location;
@@ -38,6 +36,9 @@ public class Place {
         this.types = new ArrayList<String>();
     }
 
+    public Place(LatLng location){
+        this.location = location;
+    }
 
     public void loadIconBitmap(){
 
@@ -56,6 +57,21 @@ public class Place {
         }
 
     }
+
+    public Marker getMarker() {
+        return marker;
+    }
+
+    public void setMarker(Marker marker) {
+        this.marker = marker;
+    }
+
+    public void removeMarker() {
+       if(this.marker !=null){
+           this.marker.remove();
+       }
+    }
+
 
     public LatLng getLocation() {
         return location;

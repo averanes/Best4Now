@@ -1,9 +1,11 @@
 package com.adoble.best4now.util;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.adoble.best4now.R;
 import com.adoble.best4now.domain.Weather;
+import com.adoble.best4now.ui.MainActivity;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
@@ -220,4 +222,13 @@ public class WeatherResults {
 
         return weatConsideration;
     }
+
+
+
+    public static int getIconByWeatherHorary(Activity activity, int weather, int horary){
+        String mDrawableName = "weather_" +weather+""+horary;
+        int resID = activity.getResources().getIdentifier(mDrawableName , "mipmap", activity.getPackageName());
+        return resID;
+    }
+
 }

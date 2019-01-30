@@ -14,6 +14,7 @@ import java.util.List;
 public class Permissions {
 
     public static final int location_permission = 10;
+    public static final int NETWORK_PROVIDER_PERMISSION = 11;
 
     public static boolean checkOrAskPermissions(Activity context, String[] permissions, int requesCode){
 
