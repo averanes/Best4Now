@@ -1,7 +1,6 @@
 package com.adoble.best4now.util;
 
 import android.content.Context;
-import android.location.Location;
 
 import com.adoble.best4now.R;
 import com.adoble.best4now.domain.Weather;
@@ -12,7 +11,6 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -28,9 +26,27 @@ public class WeatherResults {
     private static String dailyURL = "forecast/daily?";
 
     private Weather currentWeather;
-    private ArrayList<Weather> weatherPronostics;
+    private ArrayList<Weather> dailyWeather;
+
+
 
     public WeatherResults() {
+    }
+
+    public Weather getCurrentWeather() {
+        return currentWeather;
+    }
+
+    public void setCurrentWeather(Weather currentWeather) {
+        this.currentWeather = currentWeather;
+    }
+
+    public ArrayList<Weather> getDailyWeather() {
+        return dailyWeather;
+    }
+
+    public void setDailyWeather(ArrayList<Weather> dailyWeather) {
+        this.dailyWeather = dailyWeather;
     }
 
     // pronostico del tiempo actual
@@ -113,7 +129,7 @@ public class WeatherResults {
 
             JSONObject jsonObjectWhole = new JSONObject(stringBuilder.toString());
 
-            this.weatherPronostics = new ArrayList<Weather>();
+            this.dailyWeather = new ArrayList<Weather>();
 
             if (jsonObjectWhole.has("list")) {
                 JSONArray dailyList = jsonObjectWhole.getJSONArray("list");
@@ -157,7 +173,7 @@ public class WeatherResults {
                         }
                     }
 
-                    this.weatherPronostics.add(weather);
+                    this.dailyWeather.add(weather);
                 }
             }
 
