@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.adoble.best4now.R;
 import com.adoble.best4now.domain.Weather;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -50,8 +51,8 @@ public class WeatherResults {
     }
 
     // pronostico del tiempo actual
-    public void currentWeather(double latitude, double longitude, Context context) {
-        String fullCurrentUrl = basicUrl + currentUrl + "lat=" + latitude + "&lon=" + longitude + "&appid" + context.getString(R.string.open_weather_map_key);
+    public void currentWeather(LatLng latLng, Context context) {
+        String fullCurrentUrl = basicUrl + currentUrl + "lat=" + latLng.latitude + "&lon=" + latLng.longitude + "&appid" + context.getString(R.string.open_weather_map_key);
 
         try {
             URL url = new URL(fullCurrentUrl);
@@ -109,9 +110,9 @@ public class WeatherResults {
     }
 
     // llena una lista con el pronostico del tiempo de los siguientes 10 dias
-    public void dailyWeather(double latitude, double longitude, Context context) {
+    public void dailyWeather(LatLng latLng, Context context) {
 
-        String fullDailyUrl = WeatherResults.basicUrl + WeatherResults.dailyURL + "lat=" + latitude + "&lon=" + longitude + "&appid" + context.getString(R.string.open_weather_map_key);
+        String fullDailyUrl = WeatherResults.basicUrl + WeatherResults.dailyURL + "lat=" + latLng.latitude + "&lon=" + latLng.longitude + "&appid" + context.getString(R.string.open_weather_map_key);
 
         try {
             URL url = new URL(fullDailyUrl);
