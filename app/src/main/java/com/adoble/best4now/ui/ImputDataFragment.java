@@ -12,11 +12,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.adoble.best4now.R;
 import com.adoble.best4now.domain.InputDataCriteria;
-import com.adoble.best4now.util.WeatherResults;
+import com.adoble.best4now.util.WeatherRequest;
 
 public class ImputDataFragment extends Fragment {
 
@@ -98,13 +97,16 @@ public class ImputDataFragment extends Fragment {
             }
         });
 
-       //MainActivity.weatherResults.currentWeather(MapsFragment.mainPlace.getLocation(), MainActivity.mainActivity);
+       //MainActivity.weatherRequest.currentWeather(MapsFragment.mainPlace.getLocation(), MainActivity.mainActivity);
 
-       // ((TextView) view.findViewById(R.id.textViewWeather)).setText( MainActivity.weatherResults.getCurrentWeather().getWeatherConsideration() + " "+MainActivity.weatherResults.getCurrentWeather().getTemperatureConsideration());
+       // ((TextView) view.findViewById(R.id.textViewWeather)).setText( MainActivity.weatherRequest.getCurrentWeather().getWeatherConsideration() + " "+MainActivity.weatherRequest.getCurrentWeather().getTemperatureConsideration());
 
 
+        if(MainActivity.weather != null){
+            ((ImageView) view.findViewById(R.id.imageView)).setImageResource(WeatherRequest.getIconByWeatherHorary(MainActivity.mainActivity, MainActivity.weather.getWeatherConsideration(), 1));
+        }
 
-        ((ImageView) view.findViewById(R.id.imageView)).setImageResource(WeatherResults.getIconByWeatherHorary(MainActivity.mainActivity, 3, 2));
+
 
         return view;
     }

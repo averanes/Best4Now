@@ -1,8 +1,6 @@
 package com.adoble.best4now.ui;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -12,17 +10,17 @@ import android.view.View;
 
 import com.adoble.best4now.R;
 import com.adoble.best4now.domain.InputDataCriteria;
-import com.adoble.best4now.util.WeatherResults;
+import com.adoble.best4now.domain.Weather;
+import com.adoble.best4now.util.WeatherRequest;
 import com.google.android.gms.maps.SupportMapFragment;
 
 public class MainActivity extends AppCompatActivity {
 
     public static MainActivity mainActivity;
-
-    MapsFragment maps;
+    private MapsFragment maps;
 
     public static InputDataCriteria InputDC;
-    public static WeatherResults weatherResults = new WeatherResults();
+    public static Weather weather = new Weather();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
         //actionBar.
 
 
+    }
+
+    public static void setWeather(Weather weather){
+        MainActivity.weather = weather;
     }
 
     @Override

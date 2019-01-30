@@ -19,20 +19,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.adoble.best4now.domain.InputDataCriteria;
 import com.adoble.best4now.util.Permissions;
 import com.adoble.best4now.util.PlaceRequest;
 import com.adoble.best4now.R;
 import com.adoble.best4now.domain.Place;
 import com.adoble.best4now.util.ShowPlaceOnMap;
-import com.adoble.best4now.util.WeatherResults;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.GroundOverlayOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -331,7 +326,7 @@ public class MapsFragment extends MapFragment implements OnMapReadyCallback, Loc
 
    public void showWeatherOverMap(){
 
-      /* BitmapDescriptor image = BitmapDescriptorFactory.fromResource(WeatherResults.getIconByWeatherHorary(MainActivity.mainActivity, 3, 2));
+      /* BitmapDescriptor image = BitmapDescriptorFactory.fromResource(WeatherRequest.getIconByWeatherHorary(MainActivity.mainActivity, 3, 2));
        GroundOverlayOptions groundOverlay = new GroundOverlayOptions()
                .image(image)
                .position(mainPlace.getLocation(), 500f, 500f)
