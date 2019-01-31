@@ -136,4 +136,16 @@ public class Weather {
     public void setHorarioConsideration(int horarioConsideration) {
         this.horarioConsideration = horarioConsideration;
     }
+
+
+    public String temperatureConsideration (int temperatureConsiderationValue){
+        String tempRecomendation = "";
+        switch (temperatureConsiderationValue){
+            case 0: tempRecomendation = "Low Temperature";
+            case 1: tempRecomendation = "Normal Temperature";
+            case 2: tempRecomendation = "High Temperature";
+        }
+
+        return tempRecomendation;
+    }
 }
