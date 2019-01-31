@@ -12,9 +12,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.adoble.best4now.R;
 import com.adoble.best4now.domain.InputDataCriteria;
+import com.adoble.best4now.domain.Weather;
 import com.adoble.best4now.util.WeatherRequest;
 
 public class ImputDataFragment extends Fragment {
@@ -87,13 +89,12 @@ public class ImputDataFragment extends Fragment {
         view.findViewById(R.id.buttonProcessing).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(MainActivity.InputDC == null){
-                    MainActivity.InputDC = new InputDataCriteria();
-                }
 
-                MainActivity.InputDC.setAge(dropdownAge.getSelectedItemPosition());
-                MainActivity.InputDC.setSex(dropdownSex.getSelectedItemPosition());
-                MainActivity.InputDC.setPersons(dropdownPersons.getSelectedItemPosition());
+                MainActivity.mainActivity.getInputDataCriteria().setAge(dropdownAge.getSelectedItemPosition());
+                MainActivity.mainActivity.getInputDataCriteria().setSex(dropdownSex.getSelectedItemPosition());
+                MainActivity.mainActivity.getInputDataCriteria().setPersons(dropdownPersons.getSelectedItemPosition());
+
+                MainActivity.mainActivity.showMapa();
             }
         });
 
@@ -101,11 +102,10 @@ public class ImputDataFragment extends Fragment {
 
        // ((TextView) view.findViewById(R.id.textViewWeather)).setText( MainActivity.weatherRequest.getCurrentWeather().getWeatherConsideration() + " "+MainActivity.weatherRequest.getCurrentWeather().getTemperatureConsideration());
 
-
-        if(MainActivity.weather != null){
-            ((ImageView) view.findViewById(R.id.imageView)).setImageResource(WeatherRequest.getIconByWeatherHorary(MainActivity.mainActivity, MainActivity.weather.getWeatherConsideration(), 1));
-
-
+        Weather weather = MainActivity.mainActivity.getWeather();
+        if(weather != null){
+            ((ImageView) view.findViewById(R.id.imageView)).setImageResource(WeatherRequest.getIconByWeatherHorary(MainActivity.mainActivity, weather.getWeatherConsideration(), weather.getHorarioConsideration()));
+            ((TextView) view.findViewById(R.id.textViewTemperature)).setText(weather.getTemperature()+""+weather.getTemperatureConsideration() +" Weather "+ weather.getWeatherConsideration()+""+weather.getHorarioConsideration());
         }
 
 

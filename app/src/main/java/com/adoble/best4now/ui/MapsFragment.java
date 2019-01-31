@@ -19,11 +19,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.adoble.best4now.domain.Weather;
 import com.adoble.best4now.util.Permissions;
 import com.adoble.best4now.util.PlaceRequest;
 import com.adoble.best4now.R;
 import com.adoble.best4now.domain.Place;
 import com.adoble.best4now.util.ShowPlaceOnMap;
+import com.adoble.best4now.util.WeatherRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -149,7 +151,12 @@ public class MapsFragment extends MapFragment implements OnMapReadyCallback, Loc
             }
         });
 
-        showWeatherOverMap();
+        //showWeatherOverMap();
+
+
+        new WeatherRequest().execute(mainPlace.getLocation());
+
+
     }
 
     public void showPositionInMap(Place newPlace){

@@ -55,6 +55,8 @@ public class WeatherRequest extends AsyncTask<LatLng, Integer, Weather> {
                 stringBuilder.append(line);
             }
 
+            httpURLConnection.disconnect();
+
             JSONObject jsonObject = new JSONObject(stringBuilder.toString());
 
             Weather currentWeather = new Weather();
@@ -104,7 +106,8 @@ public class WeatherRequest extends AsyncTask<LatLng, Integer, Weather> {
     protected void onPostExecute(Weather weather) {
         super.onPostExecute(weather);
 
-        MainActivity.setWeather(weather);
+        if(weather!=null)
+         MainActivity.mainActivity.setWeather(weather);
     }
 
     public ArrayList<Weather> getDailyWeather() {
@@ -213,16 +216,16 @@ public class WeatherRequest extends AsyncTask<LatLng, Integer, Weather> {
     private int weatherConsideration(int idWeather) {
         int weatConsideration = 4; // inicializado por default en catastrofe
 
-        if ((idWeather + "").charAt(0) == 8) {
+        if ((idWeather + "").charAt(0) == '8') {
             weatConsideration = 0;
         }
-        if ((idWeather + "").charAt(0) == 3) {
+        if ((idWeather + "").charAt(0) == '3') {
             weatConsideration = 1;
         }
-        if ((idWeather + "").charAt(0) == 5) {
+        if ((idWeather + "").charAt(0) == '5') {
             weatConsideration = 2;
         }
-        if ((idWeather + "").charAt(0) == 6) {
+        if ((idWeather + "").charAt(0) == '6') {
             weatConsideration = 3;
         }
 
@@ -232,6 +235,9 @@ public class WeatherRequest extends AsyncTask<LatLng, Integer, Weather> {
 
 
     public static int getIconByWeatherHorary(Activity activity, int weather, int horary){
+        if(weather > 3) weather = 3;
+        if(horary > 2) horary = 2;
+
         String mDrawableName = "weather_" +weather+""+horary;
         int resID = activity.getResources().getIdentifier(mDrawableName , "mipmap", activity.getPackageName());
         return resID;

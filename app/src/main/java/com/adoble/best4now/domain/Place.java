@@ -3,6 +3,7 @@ package com.adoble.best4now.domain;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.adoble.best4now.util.TypePlace;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
@@ -19,9 +20,12 @@ public class Place {
     private String id;
     private String name;
     private String place_id;
-    private List<String> types;
+    private TypePlace type;
     private String vicinity;
     private Bitmap bmpIcon;
+
+    private int recomended;
+    private String description;
 
     private Marker marker;
 
@@ -33,7 +37,8 @@ public class Place {
         this.name = name;
         this.place_id = place_id;
         this.vicinity = vicinity;
-        this.types = new ArrayList<String>();
+        this.description = name;
+       // this.type = new TypePlace();
     }
 
     public Place(LatLng location){
@@ -113,17 +118,15 @@ public class Place {
         this.place_id = place_id;
     }
 
-    public List<String> getTypes() {
-        return types;
+    public TypePlace getType() {
+        return type;
     }
 
-    public void setType(String type) {
-        this.types.add(type);
+    public void setType(List<String> types) {
+
+        this.type = new TypePlace(types);
     }
 
-    public void setTypes(List<String> types) {
-        this.types = types;
-    }
 
     public String getVicinity() {
         return vicinity;
@@ -135,5 +138,21 @@ public class Place {
 
     public Bitmap getBmpIcon() {
         return bmpIcon;
+    }
+
+    public int getRecomended() {
+        return recomended;
+    }
+
+    public void setRecomended(int recomended) {
+        this.recomended = recomended;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

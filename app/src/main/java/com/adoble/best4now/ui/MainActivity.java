@@ -1,5 +1,6 @@
 package com.adoble.best4now.ui;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -7,20 +8,26 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.adoble.best4now.R;
 import com.adoble.best4now.domain.InputDataCriteria;
 import com.adoble.best4now.domain.Weather;
+import com.adoble.best4now.util.ExternalDbOpenHelper;
 import com.adoble.best4now.util.WeatherRequest;
 import com.google.android.gms.maps.SupportMapFragment;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     public static MainActivity mainActivity;
     private MapsFragment maps;
 
-    public static InputDataCriteria InputDC;
-    public static Weather weather = new Weather();
+    private InputDataCriteria InputDC;
+    private Weather weather;
+
+    private static ExternalDbOpenHelper dbOpenHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +54,54 @@ public class MainActivity extends AppCompatActivity {
         //actionBar.
 
 
+
+
     }
 
-    public static void setWeather(Weather weather){
-        MainActivity.weather = weather;
+
+    public Weather getWeather(){
+        if(weather == null)
+            weather = new Weather();
+
+        return weather;
     }
+    public void setWeather(Weather weatherP){
+
+        Toast.makeText(this.getApplicationContext(), "horary: "+weatherP.getDay().toString()+" Weather: "+weatherP.getMainWeather()+" tempC: "+weatherP.getTemperatureConsideration()+" temp: "+weatherP.getTemperature(), Toast.LENGTH_SHORT).show();
+        weather = weatherP;
+    }
+
+    public InputDataCriteria getInputDataCriteria(){
+        if(InputDC == null)
+        InputDC = new InputDataCriteria();
+
+        return InputDC;
+    }
+    public void setInputDataCriteria(InputDataCriteria inputDataCriteria){
+         InputDC = inputDataCriteria;
+    }
+
+
+
+    public ExternalDbOpenHelper getConection(){
+        if(dbOpenHelper == null)
+        dbOpenHelper = new ExternalDbOpenHelper(this);
+        //dbOpenHelper.openDataBase();
+        //int[] prediction =dbOpenHelper.getPrediction(1, 2, 2, 1, 0, 2);
+
+       /* System.out.println("********************************");
+        String resul="";
+        for (int value:prediction) {
+           resul+=value+" ";
+
+        }
+
+        System.out.print(resul);*/
+
+       return dbOpenHelper;
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -89,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void showMapa(View view){
+    public void showMapa(){
         if (maps == null) {
             maps = MapsFragment.newInstance(this);
 

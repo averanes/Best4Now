@@ -15,6 +15,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlaceRequest extends AsyncTask<String, Integer, JSONArray> {
 
@@ -91,10 +93,12 @@ public class PlaceRequest extends AsyncTask<String, Integer, JSONArray> {
                 Place p = new Place(latLng, icon, id, name, place_id, vicinity);
 
                 JSONArray types = jsonObject.getJSONArray("types");
+                List<String> typesString = new ArrayList<String>(types.length());
 
                 for (int j = 0; j < types.length(); j++) {
-                    p.setType(types.getString(j));
+                    typesString.add(types.getString(j));
                 }
+                p.setType(typesString);
 
                 MapsFragment.places.add(p);
 
