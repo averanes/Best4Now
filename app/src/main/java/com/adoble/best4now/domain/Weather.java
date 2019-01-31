@@ -89,7 +89,7 @@ public class Weather {
     public void setDay(long dayLong) {
 
         this.day = new GregorianCalendar();
-        this.day.setTimeInMillis(dayLong);
+        //this.day.setTimeInMillis(dayLong);
         int hour = this.day.get(Calendar.HOUR_OF_DAY);
 
         // mañana
@@ -98,12 +98,12 @@ public class Weather {
         }
 
         // tarde
-        if (hour >= 12 && hour < 7){
+        if (hour >= 12 && hour < 19){
             this.horarioConsideration = 1;
         }
 
         // noche
-        if (hour >= 7 && hour < 12){
+        if (hour >= 19){
             this.horarioConsideration = 2;
         }
 
