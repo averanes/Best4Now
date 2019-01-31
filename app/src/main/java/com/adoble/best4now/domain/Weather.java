@@ -1,5 +1,8 @@
 package com.adoble.best4now.domain;
 
+import com.adoble.best4now.R;
+import com.adoble.best4now.ui.MainActivity;
+
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,10 +24,10 @@ public class Weather {
     private String weatherDescription;
 
     /*
-    -1 (muy baja - por debajo de cero grados celsius)
-    0 (baja - entre 0 y 15 grados)
-    1 (normal - entre 16 - 25)
-    2 (alta - por encima de 25)
+
+    0 (baja - por debajo de 7 grados)
+    1 (normal - entre 8 - 30)
+    2 (alta - por encima de 30)
     */
     private double temperature;
 
@@ -140,12 +143,13 @@ public class Weather {
 
     public String temperatureConsiderationName(int temperatureConsiderationValue){
         String tempRecomendation = "";
+
         switch (temperatureConsiderationValue){
-            case 0: tempRecomendation = "Low Temperature";
+            case 0: tempRecomendation = MainActivity.mainActivity.getString(R.string.low_temperature);
             break;
-            case 1: tempRecomendation = "Normal Temperature";
+            case 1: tempRecomendation = MainActivity.mainActivity.getString(R.string.normal_temperature);
             break;
-            case 2: tempRecomendation = "High Temperature";
+            case 2: tempRecomendation = MainActivity.mainActivity.getString(R.string.high_temperature);
             break;
         }
 
@@ -155,11 +159,11 @@ public class Weather {
     public String weatherConsiderationName(int weatherConsiderationValue){
         String weatRecomendation = "";
         switch (weatherConsiderationValue){
-            case 0: weatRecomendation = "Clear Sky";
+            case 0: weatRecomendation = MainActivity.mainActivity.getString(R.string.good_weather);
             break;
-            case 1: weatRecomendation = "Rain";
+            case 1: weatRecomendation = MainActivity.mainActivity.getString(R.string.moderate_weather);
             break;
-            case 2: weatRecomendation = "Bad Weather";
+            case 2: weatRecomendation = MainActivity.mainActivity.getString(R.string.bad_weather);
             break;
         }
 
@@ -169,13 +173,13 @@ public class Weather {
     public String horarioConsiderationName(int horarioConsiderationValue){
         String horarioRecomendation = "";
         switch (horarioConsiderationValue){
-            case 0: horarioRecomendation = "Morning";
+            case 0: horarioRecomendation = MainActivity.mainActivity.getString(R.string.morning_horario);
             break;
-            case 1: horarioRecomendation = "Afternoon";
+            case 1: horarioRecomendation = MainActivity.mainActivity.getString(R.string.afternoon_horario);
             break;
-            case 2: horarioRecomendation = "Night";
+            case 2: horarioRecomendation = MainActivity.mainActivity.getString(R.string.night_horario);
             break;
-            case 3: horarioRecomendation = "Deep Night";
+            case 3: horarioRecomendation = MainActivity.mainActivity.getString(R.string.deep_night);
             break;
         }
 

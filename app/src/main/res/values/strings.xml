@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">Best4Now</string>
     <string name="title_activity_maps">Map</string>
+
+    <string name="low_temperature">Low Temperature</string>
+    <string name="normal_temperature">Normal Temperature</string>
+    <string name="high_temperature">High Temperature</string>
+
+    <string name="good_weather">Good weather</string>
+    <string name="moderate_weather">Moderate weather</string>
+    <string name="bad_weather">Bad Weather</string>
+
+    <string name="morning_horario">Morning</string>
+    <string name="afternoon_horario">Afternoon</string>
+    <string name="night_horario">Night</string>
+    <string name="deep_night">Deep Night</string>
+
 </resources>
