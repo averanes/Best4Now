@@ -138,7 +138,7 @@ public class Weather {
     }
 
 
-    public String temperatureConsideration (int temperatureConsiderationValue){
+    public String temperatureConsiderationName(int temperatureConsiderationValue){
         String tempRecomendation = "";
         switch (temperatureConsiderationValue){
             case 0: tempRecomendation = "Low Temperature";
@@ -147,5 +147,28 @@ public class Weather {
         }
 
         return tempRecomendation;
+    }
+
+    public String weatherConsiderationName(int weatherConsiderationValue){
+        String weatRecomendation = "";
+        switch (weatherConsiderationValue){
+            case 0: weatRecomendation = "Clear Sky";
+            case 1: weatRecomendation = "Rain";
+            case 2: weatRecomendation = "Bad Weather";
+        }
+
+        return weatRecomendation;
+    }
+
+    public String horarioConsiderationName(int horarioConsiderationValue){
+        String horarioRecomendation = "";
+        switch (horarioConsiderationValue){
+            case 0: horarioRecomendation = "Morning";
+            case 1: horarioRecomendation = "Afternoon";
+            case 2: horarioRecomendation = "Night";
+            case 3: horarioRecomendation = "Deep Night";
+        }
+
+        return horarioRecomendation;
     }
 }
