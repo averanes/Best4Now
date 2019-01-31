@@ -138,14 +138,14 @@ public class ImputDataFragment extends Fragment {
             ((ImageView) view.findViewById(R.id.imageView)).setImageResource(WeatherRequest.getIconByWeatherHorary(MainActivity.mainActivity, weather.getWeatherConsideration(), weather.getHorarioConsideration()));
 
 
-            String value="Temperature: "+ ((long)weather.getTemperature())+"°C "+weather.getTemperatureConsideration();
+            String value="Temperature: "+ ((long)weather.getTemperature())+"°C "+Weather.temperatureConsiderationName(weather.getTemperatureConsideration());
             ((TextView) view.findViewById(R.id.textViewTemperature)).setText(value);
 
-            value="Weather: "+weather.getWeatherDescription()+" "+weather.getWeatherConsideration();
+            value="Weather: "+weather.getWeatherDescription()+" "+Weather.weatherConsiderationName(weather.getWeatherConsideration());
             ((TextView) view.findViewById(R.id.textViewWeather)).setText(value);
 
             //SimpleDateFormat s = new SimpleDateFormat("");
-            value="Horary: "+weather.getDay().get(Calendar.HOUR_OF_DAY)+":"+weather.getDay().get(Calendar.MINUTE)+" "+weather.getHorarioConsideration();
+            value="Horary: "+weather.getDay().get(Calendar.HOUR_OF_DAY)+":"+weather.getDay().get(Calendar.MINUTE)+" "+Weather.temperatureConsiderationName(weather.getHorarioConsideration());
             ((TextView) view.findViewById(R.id.textViewHour)).setText(value);
         }
 
@@ -169,7 +169,7 @@ public class ImputDataFragment extends Fragment {
 
         impC.setAge(((Spinner)getView().findViewById(R.id.spinnerAge)).getSelectedItemPosition());
         impC.setSex(((Spinner)getView().findViewById(R.id.spinnerSex)).getSelectedItemPosition());
-        impC.setPersons(((Spinner)getView().findViewById(R.id.spinnerPersons)).getSelectedItemPosition()+1);
+        impC.setPersons(((Spinner)getView().findViewById(R.id.spinnerPersons)).getSelectedItemPosition());
 
 
 

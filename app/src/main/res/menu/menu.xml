@@ -3,14 +3,20 @@
 
     <!-- "Mark Favorite", should appear as action button if possible -->
     <item
-        android:id="@+id/action_favorite"
-        android:icon="@mipmap/baseline_transfer_within_a_station_black_18dp"
-        android:title=""
+        android:id="@+id/action_nearby_places"
+        android:icon="@mipmap/baseline_youtube_searched_for_black_18dp"
+        android:title="Nearby Places"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_input_data"
+        android:icon="@mipmap/baseline_tune_black_18dp"
+        android:title="Input Parameters"
         app:showAsAction="ifRoom"/>
 
     <!-- Settings, should always be in the overflow -->
     <item android:id="@+id/action_settings"
-        android:title=""
-        app:showAsAction="never"/>
+        android:icon="@mipmap/baseline_visibility_black_18dp"
+        android:title="Change Type of Recomendation"
+        app:showAsAction="ifRoom"/>
 
 </menu>

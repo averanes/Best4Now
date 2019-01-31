@@ -140,12 +140,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
+            case R.id.action_input_data:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, ImputDataFragment.newInstance()).commit();
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
 
-            case R.id.action_favorite:
+            case R.id.action_nearby_places:
 
                 if(maps!= null){
 

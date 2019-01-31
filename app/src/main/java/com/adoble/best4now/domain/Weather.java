@@ -141,7 +141,7 @@ public class Weather {
     }
 
 
-    public String temperatureConsiderationName(int temperatureConsiderationValue){
+    public static String temperatureConsiderationName(int temperatureConsiderationValue){
         String tempRecomendation = "";
 
         switch (temperatureConsiderationValue){
@@ -156,7 +156,7 @@ public class Weather {
         return tempRecomendation;
     }
 
-    public String weatherConsiderationName(int weatherConsiderationValue){
+    public static String weatherConsiderationName(int weatherConsiderationValue){
         String weatRecomendation = "";
         switch (weatherConsiderationValue){
             case 0: weatRecomendation = MainActivity.mainActivity.getString(R.string.good_weather);
@@ -170,7 +170,7 @@ public class Weather {
         return weatRecomendation;
     }
 
-    public String horarioConsiderationName(int horarioConsiderationValue){
+    public static String horarioConsiderationName(int horarioConsiderationValue){
         String horarioRecomendation = "";
         switch (horarioConsiderationValue){
             case 0: horarioRecomendation = MainActivity.mainActivity.getString(R.string.morning_horario);
