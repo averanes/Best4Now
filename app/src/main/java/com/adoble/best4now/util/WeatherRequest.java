@@ -90,7 +90,7 @@ public class WeatherRequest extends AsyncTask<LatLng, Integer, Weather> {
             }
 
             if (jsonObject.has("dt")) {
-                currentWeather.setDay(new Timestamp(jsonObject.getLong("dt")));
+                currentWeather.setDay(jsonObject.getLong("dt") * 1000);
             }
 
             return currentWeather;
@@ -103,11 +103,11 @@ public class WeatherRequest extends AsyncTask<LatLng, Integer, Weather> {
     }
 
     @Override
-    protected void onPostExecute(Weather weather) {
-        super.onPostExecute(weather);
+    protected void onPostExecute(Weather weatherP) {
+        super.onPostExecute(weatherP);
 
-        if(weather!=null)
-         MainActivity.mainActivity.setWeather(weather);
+        if(weatherP!=null)
+            MainActivity.mainActivity.setWeather(weatherP);
     }
 
     public ArrayList<Weather> getDailyWeather() {
@@ -153,7 +153,7 @@ public class WeatherRequest extends AsyncTask<LatLng, Integer, Weather> {
                     JSONObject jsonObject = dailyList.getJSONObject(i);
 
                     if (jsonObject.has("dt")) {
-                        weather.setDay(new Timestamp(jsonObject.getLong("dt")));
+                        weather.setDay(jsonObject.getLong("dt") * 1000);
                     }
 
                     if (jsonObject.has("weather")) {
@@ -197,36 +197,33 @@ public class WeatherRequest extends AsyncTask<LatLng, Integer, Weather> {
 
 
     private int temperatureConsideration(double temperature) {
-        int tempConsideration = -2;
-        if (temperature <= 0) {
-            tempConsideration = -1;
-        }
-        if (temperature > 0 && temperature <= 15) {
-            tempConsideration = 0;
-        }
-        if (temperature > 15 && temperature <= 25) {
+        // baja temperatura
+        int tempConsideration = 0;
+
+        // temperatura normal
+        if (temperature >= 7 && temperature < 31) {
             tempConsideration = 1;
         }
-        if (temperature > 25) {
+
+        // temperatura alta
+        if (temperature >= 31) {
             tempConsideration = 2;
         }
+
         return tempConsideration;
     }
 
     private int weatherConsideration(int idWeather) {
-        int weatConsideration = 4; // inicializado por default en catastrofe
+        int weatConsideration = 2; // inicializado por default en catastrofe o nieve
 
+        // buen tiempo
         if ((idWeather + "").charAt(0) == '8') {
             weatConsideration = 0;
         }
-        if ((idWeather + "").charAt(0) == '3') {
+
+        // lluvia
+        if ((idWeather + "").charAt(0) == '3' || (idWeather + "").charAt(0) == '5') {
             weatConsideration = 1;
-        }
-        if ((idWeather + "").charAt(0) == '5') {
-            weatConsideration = 2;
-        }
-        if ((idWeather + "").charAt(0) == '6') {
-            weatConsideration = 3;
         }
 
         return weatConsideration;

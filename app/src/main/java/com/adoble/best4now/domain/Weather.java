@@ -7,7 +7,7 @@ import java.util.GregorianCalendar;
 
 public class Weather {
 
-    private Timestamp day;
+    private GregorianCalendar day;
     private int id;
     private String mainWeather;
 
@@ -82,16 +82,15 @@ public class Weather {
         this.temperature = temperature;
     }
 
-    public Timestamp getDay() {
+    public GregorianCalendar getDay() {
         return day;
     }
 
-    public void setDay(Timestamp day) {
+    public void setDay(long dayLong) {
 
-
-        GregorianCalendar gCalendar = new GregorianCalendar();
-        gCalendar.setTimeInMillis(day.getTime());
-        int hour = gCalendar.get(Calendar.HOUR_OF_DAY);
+        this.day = new GregorianCalendar();
+        this.day.setTimeInMillis(dayLong);
+        int hour = this.day.get(Calendar.HOUR_OF_DAY);
 
         // mañana
         if (hour >= 7 && hour < 12){
@@ -112,8 +111,6 @@ public class Weather {
         if (hour >= 0 && hour < 7){
             this.horarioConsideration = 3;
         }
-
-        this.day = day;
     }
 
     public int getWeatherConsideration() {
