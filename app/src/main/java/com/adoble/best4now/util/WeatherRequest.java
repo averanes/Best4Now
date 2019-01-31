@@ -25,7 +25,7 @@ public class WeatherRequest extends AsyncTask<LatLng, Integer, Weather> {
 
     // https://samples.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=ce2ed02687e124b11c4a3a8eb72eb60b
     // https://samples.openweathermap.org/data/2.5/forecast/daily?lat=35&lon=139&cnt=10&appid=ce2ed02687e124b11c4a3a8eb72eb60b
-    private static String basicUrl = "https://samples.openweathermap.org/data/2.5/";
+    private static String basicUrl = "https://api.openweathermap.org/data/2.5/";
     private static String currentUrl = "weather?";
     private static String dailyURL = "forecast/daily?";
 
