@@ -23,8 +23,8 @@ import java.util.ArrayList;
 public class WeatherRequest extends AsyncTask<LatLng, Integer, Weather> {
     // private static final String APP_ID = "ce2ed02687e124b11c4a3a8eb72eb60b"; // OPEN WEATHER MAP KEY
 
-    // https://samples.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=ce2ed02687e124b11c4a3a8eb72eb60b
-    // https://samples.openweathermap.org/data/2.5/forecast/daily?lat=35&lon=139&cnt=10&appid=ce2ed02687e124b11c4a3a8eb72eb60b
+    // https://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=ce2ed02687e124b11c4a3a8eb72eb60b
+    // https://api.openweathermap.org/data/2.5/forecast/daily?lat=35&lon=139&cnt=10&appid=ce2ed02687e124b11c4a3a8eb72eb60b
     private static String basicUrl = "https://api.openweathermap.org/data/2.5/";
     private static String currentUrl = "weather?";
     private static String dailyURL = "forecast/daily?";
@@ -216,16 +216,25 @@ public class WeatherRequest extends AsyncTask<LatLng, Integer, Weather> {
     private int weatherConsideration(int idWeather) {
         int weatConsideration = 2; // inicializado por default en catastrofe o nieve
 
-        // buen tiempo
-        if ((idWeather + "").charAt(0) == '8') {
-            weatConsideration = 0;
-        }
+        switch ((idWeather + "").charAt(0)){
+            // buen tiempo
+            case '8': weatConsideration = 0;
+            break;
+            // lluvia ligera (tiempo moderado)
+            case '3':
+            case '5': weatConsideration = 1;
+            break;
+            // lluvia ligera (tiempo moderado)
+            case '7':
+               if(idWeather <= 761)
+                weatConsideration = 1;
+               break;
+               case '6':
+                   if(idWeather == 600 || idWeather == 611 || idWeather == 615)
+                       weatConsideration = 1;
+                   break;
 
-        // lluvia
-        if ((idWeather + "").charAt(0) == '3' || (idWeather + "").charAt(0) == '5') {
-            weatConsideration = 1;
         }
-
         return weatConsideration;
     }
 
