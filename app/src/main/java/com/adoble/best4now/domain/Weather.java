@@ -142,8 +142,11 @@ public class Weather {
         String tempRecomendation = "";
         switch (temperatureConsiderationValue){
             case 0: tempRecomendation = "Low Temperature";
+            break;
             case 1: tempRecomendation = "Normal Temperature";
+            break;
             case 2: tempRecomendation = "High Temperature";
+            break;
         }
 
         return tempRecomendation;
@@ -153,8 +156,11 @@ public class Weather {
         String weatRecomendation = "";
         switch (weatherConsiderationValue){
             case 0: weatRecomendation = "Clear Sky";
+            break;
             case 1: weatRecomendation = "Rain";
+            break;
             case 2: weatRecomendation = "Bad Weather";
+            break;
         }
 
         return weatRecomendation;
@@ -164,9 +170,13 @@ public class Weather {
         String horarioRecomendation = "";
         switch (horarioConsiderationValue){
             case 0: horarioRecomendation = "Morning";
+            break;
             case 1: horarioRecomendation = "Afternoon";
+            break;
             case 2: horarioRecomendation = "Night";
+            break;
             case 3: horarioRecomendation = "Deep Night";
+            break;
         }
 
         return horarioRecomendation;
