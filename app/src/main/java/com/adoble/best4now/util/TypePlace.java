@@ -24,7 +24,7 @@ public class TypePlace {
             if(type.equals("bar")  || type.equals("cafe") || type.equals("liquor_store")){
                 return 0;
             }
-            if(type.equals("restaurant")){
+            if(type.equals("restaurant") || type.equals("food")){
                 return 1;
             }
             if(type.equals("park") || type.equals("rv_park")  || type.equals("zoo")|| type.equals("amusement_park")){
@@ -42,6 +42,19 @@ public class TypePlace {
         }
 
         return -1;
+    }
+
+    public static String getTypeDescription(int type){
+
+        switch (type){
+            case 0: return "bar, cafe, liquor_store";
+            case 1: return "restaurant food";
+            case 2: return "park, rv_park, zoo, amusement_park";
+            case 3: return "movie_theater, movie_rental";
+            case 4: return "night_club, casino";
+        }
+        return "museum, art_gallery";
+
     }
 
     public List<String> getTypes() {

@@ -17,7 +17,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.adoble.best4now.domain.Weather;
 import com.adoble.best4now.util.Permissions;
@@ -41,11 +40,11 @@ import java.util.Locale;
 
 import static android.content.Context.LOCATION_SERVICE;
 
-public class MapsFragment extends MapFragment implements OnMapReadyCallback, LocationListener{
+public class MapsFragment extends MapFragment implements OnMapReadyCallback, LocationListener, GoogleMap.OnInfoWindowClickListener{
 
     public static GoogleMap mMap;
     private static FragmentActivity main;
-    private int radius = 500;
+    private int radius = 5000;
     private String language = "en";
     //private LatLng location;
     //private String nameOfLocation = "";
@@ -131,8 +130,8 @@ public class MapsFragment extends MapFragment implements OnMapReadyCallback, Loc
                 if (marker.equals(mainPlace.getMarker()))
                 {
                     //handle click here
+                 MainActivity.mainActivity.showMessage("CLIC REALIZAR ACCION");
 
-                    Toast.makeText(MapsFragment.main, "CLIC REALIZAR ACCION", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -153,15 +152,17 @@ public class MapsFragment extends MapFragment implements OnMapReadyCallback, Loc
 
         //showWeatherOverMap();
 
+        googleMap.setInfoWindowAdapter(new CustomInfoWindowAdapter(MainActivity.mainActivity));
 
-        new WeatherRequest().execute(mainPlace.getLocation());
 
-
+        mMap.setOnInfoWindowClickListener(this);
     }
 
     public void showPositionInMap(Place newPlace){
         if( mainPlace !=null )
             mainPlace.removeMarker();
+
+
 
         MarkerOptions markerOptions = new MarkerOptions();
 
@@ -182,6 +183,9 @@ public class MapsFragment extends MapFragment implements OnMapReadyCallback, Loc
                 MapsFragment.this.zoom), 3000, null);
 
         mainPlace = newPlace;
+
+        new WeatherRequest().execute(mainPlace.getLocation());
+
     }
 
     /**
@@ -369,17 +373,16 @@ public void onLocationChanged(Location location) {
     }
 
     @Override
-    public void onProviderEnabled(String provider) {
-
-    }
+    public void onProviderEnabled(String provider) { }
 
     @Override
-    public void onProviderDisabled(String provider) {
+    public void onProviderDisabled(String provider) {}
+
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
 
     }
-
-
-
 }
 
 

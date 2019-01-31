@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static ExternalDbOpenHelper dbOpenHelper;
 
+    public static int [] predictionCalculated = new int [13];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,11 +55,34 @@ public class MainActivity extends AppCompatActivity {
         //actionBar.setDisplayHomeAsUpEnabled(true);
         //actionBar.
 
+    }
 
+    public void performPrediction(){
 
+        ExternalDbOpenHelper dbOpenHelper = MainActivity.mainActivity.getConection();
+        dbOpenHelper.openDataBase();
+
+        Weather weather = getWeather();
+        InputDataCriteria inputC = getInputDataCriteria();
+
+        this.predictionCalculated =dbOpenHelper.getPrediction(inputC.getSex(), inputC.getAge(), inputC.getPersons(), weather.getTemperatureConsideration(), weather.getWeatherConsideration(), weather.getHorarioConsideration());
 
     }
 
+    public void performPrediction(InputDataCriteria inputC){
+
+        ExternalDbOpenHelper dbOpenHelper = MainActivity.mainActivity.getConection();
+        dbOpenHelper.openDataBase();
+
+        Weather weather = getWeather();
+
+        this.predictionCalculated =dbOpenHelper.getPrediction(inputC.getSex(), inputC.getAge(), inputC.getPersons(), weather.getTemperatureConsideration(), weather.getWeatherConsideration(), weather.getHorarioConsideration());
+
+    }
+
+    public void resetPrediction(){
+        predictionCalculated = new int [13];
+    }
 
     public Weather getWeather(){
         if(weather == null)
@@ -67,8 +92,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void setWeather(Weather weatherP){
 
-        Toast.makeText(this.getApplicationContext(), "horary: "+weatherP.getDay().toString()+" Weather: "+weatherP.getMainWeather()+" tempC: "+weatherP.getTemperatureConsideration()+" temp: "+weatherP.getTemperature(), Toast.LENGTH_SHORT).show();
+       Toast.makeText(this.getApplicationContext(), /*"horary: "+weatherP.getDay().toString()+*/" Weather: "+weatherP.getWeatherDescription()+" temp: "+weatherP.getTemperature(), Toast.LENGTH_LONG).show();
         weather = weatherP;
+
+        performPrediction();
     }
 
     public InputDataCriteria getInputDataCriteria(){
@@ -125,7 +152,12 @@ public class MainActivity extends AppCompatActivity {
                     //maps.updateLastKnowLocation();
                    // maps.showLastKnowLocation();
 
-                    maps.searchNearbyPlaces();
+                    if(InputDC == null ){
+                        showMessage("You must complete the data for obtain recomended places.");
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, ImputDataFragment.newInstance()).commit();
+                    }else {
+                        maps.searchNearbyPlaces();
+                    }
                 }
                 // User chose the "Favorite" action, mark the current item
                 // as a favorite...
@@ -148,6 +180,10 @@ public class MainActivity extends AppCompatActivity {
         supportMapFragment.getMapAsync(maps);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, supportMapFragment).commit();
+    }
+
+    public void showMessage(String mensaje){
+        Toast.makeText(this, mensaje, Toast.LENGTH_LONG).show();
     }
 
 }

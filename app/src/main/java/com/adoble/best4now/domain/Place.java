@@ -51,9 +51,19 @@ public class Place {
 
         URL url = null;
         try {
+            float iconSize=1;
+            switch (recomended) {
+                case 1:
+                    iconSize = 1.2F; break;
+                case 2:
+                    iconSize = 1.4F; break;
+                case 3:
+                    iconSize = 1.6F; break;
+            }
+
             url = new URL(icon);
             bmpIcon = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            bmpIcon = Bitmap.createScaledBitmap(bmpIcon, (int)(bmpIcon.getWidth()*1.5F), (int)(bmpIcon.getHeight()*1.5F), false);
+            bmpIcon = Bitmap.createScaledBitmap(bmpIcon, (int)(bmpIcon.getWidth()*iconSize), (int)(bmpIcon.getHeight()*iconSize), false);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -142,6 +152,26 @@ public class Place {
 
     public int getRecomended() {
         return recomended;
+    }
+
+    public String getRecomendedDescription() {
+
+        switch (recomended){
+            case 0: return "Neutral";
+            case 1: return "Recomended";
+            case 2: return "High Recomended";
+        }
+        return "Not reomended";
+    }
+
+    public static String getRecomendedDescription(int recomended) {
+
+        switch (recomended){
+            case 0: return "Neutral";
+            case 1: return "Recomended";
+            case 2: return "High Recomended";
+        }
+        return "Not reomended";
     }
 
     public void setRecomended(int recomended) {

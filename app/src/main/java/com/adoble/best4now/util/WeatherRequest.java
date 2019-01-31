@@ -243,6 +243,7 @@ public class WeatherRequest extends AsyncTask<LatLng, Integer, Weather> {
     public static int getIconByWeatherHorary(Activity activity, int weather, int horary){
         if(weather > 3) weather = 3;
         if(horary > 2) horary = 2;
+        if(horary == 1) horary = 0;
 
         String mDrawableName = "weather_" +weather+""+horary;
         int resID = activity.getResources().getIdentifier(mDrawableName , "mipmap", activity.getPackageName());

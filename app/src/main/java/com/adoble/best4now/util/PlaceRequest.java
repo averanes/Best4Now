@@ -22,7 +22,7 @@ public class PlaceRequest extends AsyncTask<String, Integer, JSONArray> {
 
     public static String PLACES_REQUEST = "";
     public static String nextPageToken="";
-    public static int requestCount = 0, REQUEST_LIMIT = 1;
+    public static int requestCount = 0, REQUEST_LIMIT = 4;
 
     public Context context;
 

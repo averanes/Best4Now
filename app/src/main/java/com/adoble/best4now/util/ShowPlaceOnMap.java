@@ -25,19 +25,14 @@ public class ShowPlaceOnMap extends AsyncTask<Place, Integer, Place>
     protected Place doInBackground(Place... places) {
         Place place = places[0];
 
-        ExternalDbOpenHelper dbOpenHelper = MainActivity.mainActivity.getConection();
-        dbOpenHelper.openDataBase();
-
-        Weather weather = MainActivity.mainActivity.getWeather();
-        InputDataCriteria inputC = MainActivity.mainActivity.getInputDataCriteria();
-
-        int[] prediction =dbOpenHelper.getPrediction(inputC.getSex(), inputC.getAge(), inputC.getPersons(), weather.getTemperatureConsideration(), weather.getWeatherConsideration(), weather.getHorarioConsideration());
-
-
         place.setRecomended(-1);
+        //busco la mayor recomendacion para este lugar analizando la recomendacion por tipos, si tiene un solo tipo la recomendacion para este
         for (int i = 0; i < place.getType().getTypesGroup().size(); i++) {
 
-            int recomendedTemp = prediction[place.getType().getTypesGroup().get(i) + 7]; //7 es para descartar las 7 columnas primeras para agrupar
+            int typeT=place.getType().getTypesGroup().get(i);
+            if(typeT == -1) continue; //no esta en los grupos q manejamos
+
+            int recomendedTemp = MainActivity.predictionCalculated[ typeT + 7]; //7 es para descartar las 7 columnas primeras para agrupar
 
             if(recomendedTemp > place.getRecomended()){
                 place.setRecomended(recomendedTemp); ;
@@ -45,12 +40,12 @@ public class ShowPlaceOnMap extends AsyncTask<Place, Integer, Place>
         }
 
         //String descrip=place.getName()+"\n Recomendation:"+place.getRecomended()+"\n[";
-        String descrip="R: "+place.getRecomended()+"\n[";
+        String descrip="[";
 
         for (String typeT: place.getType().getTypes() ) {
             descrip+=" "+typeT;
         }
-        descrip+=" ]";
+        descrip+=" ] ";
 
         place.setDescription(descrip);
 
@@ -80,12 +75,15 @@ public class ShowPlaceOnMap extends AsyncTask<Place, Integer, Place>
 
         super.onPostExecute(place);
 
+        //if(place.getRecomended()<1)return;
+
         Marker marker = MapsFragment.mMap.addMarker(new MarkerOptions()
                 .position(place.getLocation())
                 .title(place.getDescription())
                 //.snippet("Bangalore")
                 .icon(BitmapDescriptorFactory.fromBitmap(place.getBmpIcon()) ));
 
+        marker.setTag(place);
         place.setMarker(marker);
 
     }
