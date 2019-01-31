@@ -1,8 +1,11 @@
 package com.adoble.best4now.ui;
 
+import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +21,7 @@ import com.adoble.best4now.util.WeatherRequest;
 import com.google.android.gms.maps.SupportMapFragment;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -163,12 +167,111 @@ public class MainActivity extends AppCompatActivity {
                 // as a favorite...
                 return true;
 
+            case R.id.action_language:
+            showDialogLanguage();
+            return true;
+
+            case R.id.action_recommended_option:
+                showDialogRecomendedOption();
+                return true;
+
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    public void showDialogLanguage(){
+  final String[] language ={"EN", "IT", "ES"};
+
+                final boolean[] itemsChecked = new boolean[language.length];
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+                //alertDialog.setIcon(R.drawable.dialogopng);
+                alertDialog.setTitle("Select Language");
+
+                alertDialog.setMultiChoiceItems(language, itemsChecked, new DialogInterface.OnMultiChoiceClickListener(){
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        itemsChecked[which] = isChecked;
+                    }
+                });
+
+                alertDialog.setPositiveButton("Accept", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        Toast.makeText(getApplicationContext(), "Dutch", Toast.LENGTH_SHORT).show();
+                        setLocale("nl");
+                    }
+                });
+
+                alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        showMessage("You must restart de applications");
+                        setLocale("");
+                    }
+                });
+                alertDialog.show();
+
+
+            }
+
+    public void setLocale(String lang) {
+
+        Locale locale = new Locale(lang);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+    }
+
+    public void showDialogRecomendedOption(){
+        final String[] language ={"EN", "IT", "ES"};
+
+        final boolean[] itemsChecked = new boolean[language.length];
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        //alertDialog.setIcon(R.drawable.dialogopng);
+        alertDialog.setTitle("Select Language");
+
+        alertDialog.setMultiChoiceItems(language, itemsChecked, new DialogInterface.OnMultiChoiceClickListener(){
+
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                itemsChecked[which] = isChecked;
+            }
+        });
+
+        alertDialog.setPositiveButton("Accept", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                Toast.makeText(getApplicationContext(), "Dutch", Toast.LENGTH_SHORT).show();
+                setLocale("nl");
+            }
+        });
+
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialog, int which)
+            {
+                showMessage("You must restart de applications");
+                setLocale("");
+            }
+        });
+        alertDialog.show();
+
+
     }
 
     public void showMapa(){

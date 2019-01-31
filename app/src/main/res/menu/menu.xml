@@ -14,9 +14,14 @@
         app:showAsAction="ifRoom"/>
 
     <!-- Settings, should always be in the overflow -->
-    <item android:id="@+id/action_settings"
+    <item android:id="@+id/action_recommended_option"
         android:icon="@mipmap/baseline_visibility_black_18dp"
-        android:title="Change Type of Recomendation"
+        android:title="Recomended option"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/action_language"
+        android:icon="@mipmap/baseline_visibility_black_18dp"
+        android:title="Language"
         app:showAsAction="ifRoom"/>
 
 </menu>

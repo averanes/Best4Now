@@ -145,7 +145,7 @@ public class ImputDataFragment extends Fragment {
             ((TextView) view.findViewById(R.id.textViewWeather)).setText(value);
 
             //SimpleDateFormat s = new SimpleDateFormat("");
-            value="Horary: "+weather.getDay().get(Calendar.HOUR_OF_DAY)+":"+weather.getDay().get(Calendar.MINUTE)+" "+Weather.temperatureConsiderationName(weather.getHorarioConsideration());
+            value="Horary: "+weather.getDay().get(Calendar.HOUR_OF_DAY)+":"+weather.getDay().get(Calendar.MINUTE)+" "+Weather.horarioConsiderationName(weather.getHorarioConsideration());
             ((TextView) view.findViewById(R.id.textViewHour)).setText(value);
         }
 
