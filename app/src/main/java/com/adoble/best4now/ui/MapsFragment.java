@@ -97,7 +97,7 @@ public class MapsFragment extends MapFragment implements OnMapReadyCallback, Loc
         }
 
         if (PlaceRequest.PLACES_REQUEST.isEmpty())
-            PlaceRequest.PLACES_REQUEST = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=" + MapsFragment.main.getString(R.string.google_maps_key);
+            PlaceRequest.PLACES_REQUEST = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=" + MapsFragment.main.getString(R.string.google_maps_key)+ "&radius=" + radius + "&language=" + language;
 
 
         // Add a marker in Sydney and move the camera
@@ -226,7 +226,7 @@ public class MapsFragment extends MapFragment implements OnMapReadyCallback, Loc
     @SuppressLint("MissingPermission")
     public void searchNearbyPlaces() {
 
-        String url = PlaceRequest.PLACES_REQUEST + "&radius=" + radius + "&language=" + language + "&location=" + mainPlace.getLocation().latitude + "," + mainPlace.getLocation().longitude;
+        String url = PlaceRequest.PLACES_REQUEST  + "&location=" + mainPlace.getLocation().latitude + "," + mainPlace.getLocation().longitude;
 
             removeAlMarkerPlace();
 

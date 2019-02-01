@@ -1,8 +1,14 @@
 package com.adoble.best4now.ui;
 
+import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -179,19 +185,33 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    int selectedOption=-1;
     public void showDialogLanguage() {
-        final String[] language = {"EN", "IT", "ES"};
+        String[] languageTem = {"EN", "IT", "ES"};
+
+        SharedPreferences prfs = getSharedPreferences("AUTHENTICATION_FILE_NAME", Context.MODE_PRIVATE);
+        String lang = prfs.getString("language", "EN");
 
 
+        switch (lang) {
+            case "IT":
+                languageTem = new String[]{ "IT", "EN", "ES"};  break;
+            case "ES":
+                languageTem = new String[]{ "ES", "EN", "IT"};  break;
+        }
+
+        final String[] language = languageTem;
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         //alertDialog.setIcon(R.drawable.dialogopng);
         alertDialog.setTitle("Select Language");
 
-        alertDialog.setSingleChoiceItems(language, 1, new DialogInterface.OnClickListener() {
+
+
+        alertDialog.setSingleChoiceItems(language, 0, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                selectedOption = which;
             }
         });
 
@@ -199,8 +219,20 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                showMessage("You must restart de applications");
-                setLocale(language[which]);
+                if(selectedOption!=-1){
+                    showMessage("You must restart de applications");
+
+                    SharedPreferences.Editor edit =  getSharedPreferences("AUTHENTICATION_FILE_NAME", Context.MODE_PRIVATE).edit();
+
+                    edit.putString("language", language[selectedOption]);
+                    edit.commit();
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                         updateResourcesLocale(MainActivity.this, new Locale(language[selectedOption].toLowerCase()));
+                    } else updateResourcesLocaleLegacy(MainActivity.this, new Locale(language[selectedOption].toLowerCase()));
+                }
+
+                dialog.cancel();
             }
         });
 
@@ -208,21 +240,30 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                setLocale("");
+                dialog.cancel();
             }
         });
+
+
         alertDialog.show();
 
 
     }
 
-    public void setLocale(String lang) {
+    @TargetApi(Build.VERSION_CODES.N)
+    private Context updateResourcesLocale(Context context, Locale locale) {
+        Configuration configuration = context.getResources().getConfiguration();
+        configuration.setLocale(locale);
+        return context.createConfigurationContext(configuration);
+    }
 
-        Locale locale = new Locale(lang.toLowerCase());
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+    @SuppressWarnings("deprecation")
+    private Context updateResourcesLocaleLegacy(Context context, Locale locale) {
+        Resources resources = context.getResources();
+        Configuration configuration = resources.getConfiguration();
+        configuration.locale = locale;
+        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+        return context;
     }
 
     public void showDialogRecomendedOption() {
@@ -246,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getApplicationContext(), "Dutch", Toast.LENGTH_SHORT).show();
-                setLocale("nl");
+
             }
         });
 
@@ -254,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 showMessage("You must restart de applications");
-                setLocale("");
+
             }
         });
         alertDialog.show();
