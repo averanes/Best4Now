@@ -12,7 +12,7 @@
     <string name="morning_horario">Morning</string>
     <string name="afternoon_horario">Afternoon</string>
     <string name="night_horario">Night</string>
-    <string name="deep_night">Deep Night</string>
+    <string name="deep_night">Early morning</string>
 
     <string-array name="kind_recommendation_list">
         <item>Not recommended</item>
@@ -47,7 +47,9 @@
 
     <string name="input_parameters">Input parameters</string>
 
-    <string name="recomended_option">Recommended options</string>
+    <string name="search_by_name">Search by name</string>
+
+    <string name="recomended_options">Recommended options</string>
 
     <string name="language">Language</string>
 
@@ -60,6 +62,20 @@
     <string name="obtained_data_automatically">Obtained data automatically</string>
 
     <string name="schedule">Schedule</string>
+
+    <string-array name="gender_list">
+        <item>Female</item>
+        <item>Male</item>
+        <item>Collective</item>
+    </string-array>
+
+    <string-array name="grouped_age_list">
+        <item>0-15</item>
+        <item>16-45</item>
+        <item>46...</item>
+    </string-array>
+
+    <string name="recommended_place_with_data">Recommended places with this data</string>
 
 </resources>
 
