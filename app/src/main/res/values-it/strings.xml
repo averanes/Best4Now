@@ -35,7 +35,7 @@
 
     <string name="select_language">Seleziona Lingua</string>
 
-    <string name="restart_application">È necessario riavviare le applicazioni</string>
+    <string name="restart_application">La applicazione deve essere riavviata</string>
 
     <string name="accept">Accettare</string>
 
@@ -60,4 +60,5 @@
     <string name="obtained_data_automatically">Dati ottenuti automaticamente</string>
 
     <string name="schedule">Orario</string>
+
 </resources>

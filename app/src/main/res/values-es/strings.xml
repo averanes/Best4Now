@@ -2,7 +2,7 @@
     <string name="app_name">Best4Now</string>
 
     <string name="low_temperature">Baja Temperatura</string>
-    <string name="normal_temperature">Temperature Normal</string>
+    <string name="normal_temperature">Temperatura Normal</string>
     <string name="high_temperature">Alta Temperatura</string>
 
     <string name="good_weather">Buen Clima</string>
@@ -60,7 +60,6 @@
     <string name="obtained_data_automatically">Datos obtenidos automáticamente</string>
 
     <string name="schedule">Horario</string>
-
 
 </resources>
 

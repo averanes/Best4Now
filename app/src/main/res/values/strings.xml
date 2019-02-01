@@ -17,7 +17,7 @@
     <string-array name="kind_recommendation_list">
         <item>Not recommended</item>
         <item>Normal recommendation</item>
-        <item>High recommended</item>
+        <item>High recommendation</item>
         <item>Very high recommendation</item>
     </string-array>
 
@@ -37,7 +37,7 @@
 
     <string name="accept">Accept</string>
 
-    <string name="restart_application">You must restart the applications</string>
+    <string name="restart_application">You must restart the application</string>
 
     <string name="cancel">Cancel</string>
 
@@ -60,7 +60,6 @@
     <string name="obtained_data_automatically">Obtained data automatically</string>
 
     <string name="schedule">Schedule</string>
-
 
 </resources>
 
