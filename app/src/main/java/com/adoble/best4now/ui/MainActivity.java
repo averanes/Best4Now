@@ -23,7 +23,9 @@ import com.adoble.best4now.domain.Weather;
 import com.adoble.best4now.util.ExternalDbOpenHelper;
 import com.google.android.gms.maps.SupportMapFragment;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
     private static ExternalDbOpenHelper dbOpenHelper;
 
     public static int[] predictionCalculated = new int[13];
+
+    // se pueden almacenar valores como -1, 0, 1, 2 (tipos de recomendacion)
+    private List<Integer> selectedRecommendations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -272,44 +277,91 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showDialogRecomendedOption() {
-        final String[] language = getResources().getStringArray(R.array.option_list);
 
+        final String kindRecommendationList[] = getResources().getStringArray(R.array.kind_recommendation_list);
+        final boolean[] itemsChecked = new boolean[kindRecommendationList.length];
 
-
-
-        final boolean[] itemsChecked = new boolean[language.length];
-        itemsChecked[1] = true;
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         //alertDialog.setIcon(R.drawable.dialogopng);
-        alertDialog.setTitle("Select Language");
+        alertDialog.setTitle(R.string.title_select_kind_recommendation);
 
-        alertDialog.setMultiChoiceItems(language, itemsChecked, new DialogInterface.OnMultiChoiceClickListener() {
+
+        // la primera vez q se ejecuta
+        if (selectedRecommendations == null) {
+            selectedRecommendations = new ArrayList<>();
+
+            // la primera vez por default seleccionamos todos menos el "NO REOMENDADO"
+            selectedRecommendations.add(0);
+            selectedRecommendations.add(1);
+            selectedRecommendations.add(2);
+        }
+
+        // si la lista es mayor q cero, es pq tiene al menos un elemento
+        if (selectedRecommendations.size() > 0) {
+            for (int i = 0; i < selectedRecommendations.size(); i++) {
+                itemsChecked[selectedRecommendations.get(i) + 1] = true;
+            }
+        }
+
+        alertDialog.setMultiChoiceItems(kindRecommendationList, itemsChecked, new DialogInterface.OnMultiChoiceClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                itemsChecked[which] = isChecked;
+                if (isChecked) {
+                    itemsChecked[which] = true;
+                } else {
+                    itemsChecked[which] = false;
+                }
             }
         });
 
         alertDialog.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(), "Dutch", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Dutch", Toast.LENGTH_SHORT).show();
 
+
+                int selectedElementCount = 0;
+                for (int i = 0; i < itemsChecked.length; i++) {
+                    if (itemsChecked[i]) {
+                        selectedElementCount++;
+                    }
+                }
+
+                if (selectedElementCount == 0) {
+                    showMessage("You must select one recommendation at least");
+                }
+
+                // si al menos tiene seleccionada una recomendacion
+                else {
+
+                    if (selectedRecommendations == null) {
+                        selectedRecommendations = new ArrayList<>();
+                    } else {
+                        selectedRecommendations.clear();
+                    }
+
+                    for (int i = 0; i < itemsChecked.length; i++) {
+                        if (itemsChecked[i]) {
+                            selectedRecommendations.add(i - 1);
+                        }
+                    }
+
+                    dialog.cancel();
+                }
             }
         });
 
         alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                showMessage("You must restart de applications");
-
+                //showMessage("You must restart de applications");
+                dialog.cancel();
             }
         });
+
         alertDialog.show();
-
-
     }
 
     public void showMapa() {
