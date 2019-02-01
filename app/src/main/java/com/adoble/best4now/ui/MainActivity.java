@@ -23,6 +23,7 @@ import com.adoble.best4now.domain.Weather;
 import com.adoble.best4now.util.ExternalDbOpenHelper;
 import com.google.android.gms.maps.SupportMapFragment;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -254,6 +255,10 @@ public class MainActivity extends AppCompatActivity {
     private Context updateResourcesLocale(Context context, Locale locale) {
         Configuration configuration = context.getResources().getConfiguration();
         configuration.setLocale(locale);
+
+        getBaseContext().getResources().updateConfiguration(configuration,
+                getBaseContext().getResources().getDisplayMetrics());
+
         return context.createConfigurationContext(configuration);
     }
 
@@ -267,9 +272,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showDialogRecomendedOption() {
-        final String[] language = {"EN", "IT", "ES"};
+        final String[] language = getResources().getStringArray(R.array.option_list);
+
+
+
 
         final boolean[] itemsChecked = new boolean[language.length];
+        itemsChecked[1] = true;
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         //alertDialog.setIcon(R.drawable.dialogopng);
