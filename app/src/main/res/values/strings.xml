@@ -25,11 +25,11 @@
 
     <string name="center_search_nearby_place">Point for search nearby place</string>
 
-    <string name="temperature">Temperature: </string>
+    <string name="temperature">Temperature</string>
 
     <string name="celsius_degrees">°C </string>
 
-    <string name="weather">Weather: </string>
+    <string name="weather">Weather</string>
 
     <string name="must_complete_recommended_places">You must complete the data for obtain recommended places.</string>
 
@@ -42,6 +42,25 @@
     <string name="cancel">Cancel</string>
 
     <string name="select_one_recommendation">You must select one kind of recommendation at least</string>
+
+    <string name="nearby_places">Nearby places</string>
+
+    <string name="input_parameters">Input parameters</string>
+
+    <string name="recomended_option">Recommended options</string>
+
+    <string name="language">Language</string>
+
+    <string name="gender">Gender</string>
+
+    <string name="age">Age</string>
+
+    <string name="persons">Persons</string>
+
+    <string name="obtained_data_automatically">Obtained data automatically</string>
+
+    <string name="schedule">Schedule</string>
+
 
 </resources>
 

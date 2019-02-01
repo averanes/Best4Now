@@ -25,11 +25,11 @@
 
     <string name="center_search_nearby_place">Punto per cercare posto nelle vicinanze</string>
 
-    <string name="temperature">Temperature: </string>
+    <string name="temperature">Temperature</string>
 
     <string name="celsius_degrees">°C </string>
 
-    <string name="weather">Tempo: </string>
+    <string name="weather">Tempo</string>
 
     <string name="must_complete_recommended_places">È necessario completare i dati per ottenere posti raccomandati.</string>
 
@@ -42,4 +42,22 @@
     <string name="cancel">Annulla</string>
 
     <string name="select_one_recommendation">Devi selezionare almeno un tipo di raccomandazione</string>
+
+    <string name="nearby_places">Luoghi vicini</string>
+
+    <string name="input_parameters">Parametri di input</string>
+
+    <string name="recomended_option">Opzioni raccomandate</string>
+
+    <string name="language">Lingua</string>
+
+    <string name="gender">Genere</string>
+
+    <string name="age">Età</string>
+
+    <string name="persons">Persone</string>
+
+    <string name="obtained_data_automatically">Dati ottenuti automaticamente</string>
+
+    <string name="schedule">Orario</string>
 </resources>
