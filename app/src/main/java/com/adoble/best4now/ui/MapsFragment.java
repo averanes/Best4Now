@@ -110,7 +110,9 @@ public class MapsFragment extends MapFragment implements OnMapReadyCallback, Loc
         //boolean result = showPlaceAndNearbyPlaces("University of Calabria");
 
         //updateLastKnowLocation();
-        Place p = new Place(new LatLng(39.362136, 16.226346)); //University of Calabria
+        Place p = mainPlace;
+        if(p == null)
+               p = new Place(new LatLng(39.362136, 16.226346)); //University of Calabria
 
         showPositionInMapAndSearchWeather(p);
 
@@ -403,9 +405,37 @@ public void onLocationChanged(Location location) {
         Double latitude = marker.getPosition().latitude;
         Double longitude = marker.getPosition().longitude;
 
+
+
         String uri = "geo:" + latitude + ","
                 +longitude + "?q=" + latitude
                 + "," + longitude;
+
+
+        if(marker.getTag() != null){
+            Place p = (Place) marker.getTag();
+
+           /* String temp = "";
+            for (String val:p.getType().getTypes()) {
+                temp+="+"+val;
+            }
+            temp = temp.substring(1);*/
+
+
+
+            uri = "https://www.google.com/maps/search/?api=1&query="+Uri.encode(p.getName())+"&query_place_id="+p.getId();
+
+            Uri gmmIntentUri = Uri.parse(uri);
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            if (mapIntent.resolveActivity(MainActivity.mainActivity.getPackageManager()) != null) {
+                MainActivity.mainActivity.startActivity(mapIntent);
+            }
+
+        }
+
+
+
         MainActivity.mainActivity.startActivity(new Intent(android.content.Intent.ACTION_VIEW,
                 Uri.parse(uri)));
 

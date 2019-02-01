@@ -3,6 +3,7 @@ package com.adoble.best4now.ui;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -12,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,7 +24,15 @@ import com.adoble.best4now.R;
 import com.adoble.best4now.domain.InputDataCriteria;
 import com.adoble.best4now.domain.Weather;
 import com.adoble.best4now.util.ExternalDbOpenHelper;
+import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.api.Places;
+
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     private List<Integer> selectedRecommendations;
 
     boolean mapsActive = true;
+
+    final int AUTOCOMPLETE_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,9 +220,40 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.action_recommended_option:
                 showDialogRecomendedOption();
+
+
                 return true;
 
+            case R.id.action_search_name:
+                // Initialize Places.
+                Places.initialize(getApplicationContext(), getString(R.string.google_maps_key));
+
+// Create a new Places client instance.
+                PlacesClient placesClient = Places.createClient(this);
+
+
+                // Set the fields to specify which types of place data to return.
+                List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
+
+                //Place.Field.ADDRESS
+
+
+                // Start the autocomplete intent.
+                Intent intent = new Autocomplete.IntentBuilder(
+                        AutocompleteActivityMode.OVERLAY, fields)
+                        .build(this);
+                startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE);
+
+                return true;
             default:
+
+
+
+
+
+
+
+
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
@@ -404,6 +447,35 @@ public class MainActivity extends AppCompatActivity {
 
     public void showMessage(String mensaje) {
         Toast.makeText(this, mensaje, Toast.LENGTH_LONG).show();
+    }
+
+
+
+    /**
+     * Override the activity's onActivityResult(), check the request code, and
+     * do something with the returned place data (in this example it's place name and place ID).
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = Autocomplete.getPlaceFromIntent(data);
+                Log.i("Best4Now", "Place: " + place.getName() + ", " + place.getId());
+
+                MapsFragment.mainPlace = new com.adoble.best4now.domain.Place(place.getLatLng());
+                showMapa();
+
+
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                // TODO: Handle the error.
+                Status status = Autocomplete.getStatusFromIntent(data);
+                Log.i("Best4Now", status.getStatusMessage());
+
+                showMessage(status.getStatusMessage());
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
     }
 
 }
