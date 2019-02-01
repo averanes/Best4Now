@@ -1,14 +1,13 @@
 <resources>
     <string name="app_name">Best4Now</string>
-    <string name="title_activity_maps">Map</string>
 
-    <string name="low_temperature">Bassa temperatura</string>
-    <string name="normal_temperature">Temperatura normale</string>
-    <string name="high_temperature">Alta temperatura</string>
+    <string name="low_temperature">Bassa Temperatura</string>
+    <string name="normal_temperature">Temperatura Normale</string>
+    <string name="high_temperature">Alta Temperatura</string>
 
-    <string name="good_weather">Bel tempo</string>
-    <string name="moderate_weather">Tempo moderato</string>
-    <string name="bad_weather">Brutto tempo</string>
+    <string name="good_weather">Bel Tempo</string>
+    <string name="moderate_weather">Tempo Moderato</string>
+    <string name="bad_weather">Brutto Tempo</string>
 
     <string name="morning_horario">Mattina</string>
     <string name="afternoon_horario">Pomeriggio</string>
@@ -24,5 +23,23 @@
 
     <string name="title_select_kind_recommendation">Seleziona il tipo di raccomandazione</string>
 
-    <string name="center_search_nearby_place">Point for search nearby place</string>
+    <string name="center_search_nearby_place">Punto per cercare posto nelle vicinanze</string>
+
+    <string name="temperature">Temperature: </string>
+
+    <string name="celsius_degrees">°C </string>
+
+    <string name="weather">Tempo: </string>
+
+    <string name="must_complete_recommended_places">È necessario completare i dati per ottenere posti raccomandati.</string>
+
+    <string name="select_language">Seleziona Lingua</string>
+
+    <string name="restart_application">È necessario riavviare le applicazioni</string>
+
+    <string name="accept">Accettare</string>
+
+    <string name="cancel">Annulla</string>
+
+    <string name="select_one_recommendation">Devi selezionare almeno un tipo di raccomandazione</string>
 </resources>

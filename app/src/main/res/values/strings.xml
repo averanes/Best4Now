@@ -1,13 +1,12 @@
 <resources>
     <string name="app_name">Best4Now</string>
-    <string name="title_activity_maps">Map</string>
 
     <string name="low_temperature">Low Temperature</string>
     <string name="normal_temperature">Normal Temperature</string>
     <string name="high_temperature">High Temperature</string>
 
-    <string name="good_weather">Good weather</string>
-    <string name="moderate_weather">Moderate weather</string>
+    <string name="good_weather">Good Weather</string>
+    <string name="moderate_weather">Moderate Weather</string>
     <string name="bad_weather">Bad Weather</string>
 
     <string name="morning_horario">Morning</string>
@@ -18,12 +17,31 @@
     <string-array name="kind_recommendation_list">
         <item>Not recommended</item>
         <item>Normal recommendation</item>
-        <item>High Recommended</item>
+        <item>High recommended</item>
         <item>Very high recommendation</item>
     </string-array>
 
     <string name="title_select_kind_recommendation">Select kind of recommendation</string>
 
     <string name="center_search_nearby_place">Point for search nearby place</string>
+
+    <string name="temperature">Temperature: </string>
+
+    <string name="celsius_degrees">°C </string>
+
+    <string name="weather">Weather: </string>
+
+    <string name="must_complete_recommended_places">You must complete the data for obtain recommended places.</string>
+
+    <string name="select_language">Select Language</string>
+
+    <string name="accept">Accept</string>
+
+    <string name="restart_application">You must restart the applications</string>
+
+    <string name="cancel">Cancel</string>
+
+    <string name="select_one_recommendation">You must select one kind of recommendation at least</string>
+
 </resources>
 
