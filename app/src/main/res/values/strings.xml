@@ -22,6 +22,6 @@
         <item>Very high recommendation</item>
     </string-array>
 
-    <string name="title_select_recommendation">Select Recommendation</string>
+    <string name="title_select_kind_recommendation">Select kind of recommendation</string>
 </resources>
 

@@ -22,5 +22,5 @@
         <item>Raccomandazione molto alta</item>
     </string-array>
 
-    <string name="title_select_recommendation">Seleziona Raccomandazione</string>
+    <string name="title_select_kind_recommendation">Seleziona il tipo di raccomandazione</string>
 </resources>
