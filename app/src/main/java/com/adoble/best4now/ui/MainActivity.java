@@ -2,7 +2,6 @@ package com.adoble.best4now.ui;
 
 import android.content.DialogInterface;
 import android.content.res.Configuration;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -10,17 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.adoble.best4now.R;
 import com.adoble.best4now.domain.InputDataCriteria;
 import com.adoble.best4now.domain.Weather;
 import com.adoble.best4now.util.ExternalDbOpenHelper;
-import com.adoble.best4now.util.WeatherRequest;
 import com.google.android.gms.maps.SupportMapFragment;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static ExternalDbOpenHelper dbOpenHelper;
 
-    public static int [] predictionCalculated = new int [13];
+    public static int[] predictionCalculated = new int[13];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void performPrediction(){
+    public void performPrediction() {
 
         ExternalDbOpenHelper dbOpenHelper = MainActivity.mainActivity.getConection();
         dbOpenHelper.openDataBase();
@@ -69,54 +65,55 @@ public class MainActivity extends AppCompatActivity {
         Weather weather = getWeather();
         InputDataCriteria inputC = getInputDataCriteria();
 
-        this.predictionCalculated =dbOpenHelper.getPrediction(inputC.getSex(), inputC.getAge(), inputC.getPersons(), weather.getTemperatureConsideration(), weather.getWeatherConsideration(), weather.getHorarioConsideration());
+        this.predictionCalculated = dbOpenHelper.getPrediction(inputC.getSex(), inputC.getAge(), inputC.getPersons(), weather.getTemperatureConsideration(), weather.getWeatherConsideration(), weather.getHorarioConsideration());
 
     }
 
-    public void performPrediction(InputDataCriteria inputC){
+    public void performPrediction(InputDataCriteria inputC) {
 
         ExternalDbOpenHelper dbOpenHelper = MainActivity.mainActivity.getConection();
         dbOpenHelper.openDataBase();
 
         Weather weather = getWeather();
 
-        this.predictionCalculated =dbOpenHelper.getPrediction(inputC.getSex(), inputC.getAge(), inputC.getPersons(), weather.getTemperatureConsideration(), weather.getWeatherConsideration(), weather.getHorarioConsideration());
+        this.predictionCalculated = dbOpenHelper.getPrediction(inputC.getSex(), inputC.getAge(), inputC.getPersons(), weather.getTemperatureConsideration(), weather.getWeatherConsideration(), weather.getHorarioConsideration());
 
     }
 
-    public void resetPrediction(){
-        predictionCalculated = new int [13];
+    public void resetPrediction() {
+        predictionCalculated = new int[13];
     }
 
-    public Weather getWeather(){
-        if(weather == null)
+    public Weather getWeather() {
+        if (weather == null)
             weather = new Weather();
 
         return weather;
     }
-    public void setWeather(Weather weatherP){
 
-       Toast.makeText(this.getApplicationContext(), /*"horary: "+weatherP.getDay().toString()+*/" Weather: "+weatherP.getWeatherDescription()+" temp: "+weatherP.getTemperature(), Toast.LENGTH_LONG).show();
+    public void setWeather(Weather weatherP) {
+
+        Toast.makeText(this.getApplicationContext(), /*"horary: "+weatherP.getDay().toString()+*/" Weather: " + weatherP.getWeatherDescription() + " temp: " + weatherP.getTemperature(), Toast.LENGTH_LONG).show();
         weather = weatherP;
 
         performPrediction();
     }
 
-    public InputDataCriteria getInputDataCriteria(){
-        if(InputDC == null)
-        InputDC = new InputDataCriteria();
+    public InputDataCriteria getInputDataCriteria() {
+        if (InputDC == null)
+            InputDC = new InputDataCriteria();
 
         return InputDC;
     }
-    public void setInputDataCriteria(InputDataCriteria inputDataCriteria){
-         InputDC = inputDataCriteria;
+
+    public void setInputDataCriteria(InputDataCriteria inputDataCriteria) {
+        InputDC = inputDataCriteria;
     }
 
 
-
-    public ExternalDbOpenHelper getConection(){
-        if(dbOpenHelper == null)
-        dbOpenHelper = new ExternalDbOpenHelper(this);
+    public ExternalDbOpenHelper getConection() {
+        if (dbOpenHelper == null)
+            dbOpenHelper = new ExternalDbOpenHelper(this);
         //dbOpenHelper.openDataBase();
         //int[] prediction =dbOpenHelper.getPrediction(1, 2, 2, 1, 0, 2);
 
@@ -129,9 +126,8 @@ public class MainActivity extends AppCompatActivity {
 
         System.out.print(resul);*/
 
-       return dbOpenHelper;
+        return dbOpenHelper;
     }
-
 
 
     @Override
@@ -151,15 +147,15 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.action_nearby_places:
 
-                if(maps!= null){
+                if (maps != null) {
 
                     //maps.updateLastKnowLocation();
-                   // maps.showLastKnowLocation();
+                    // maps.showLastKnowLocation();
 
-                    if(InputDC == null ){
+                    if (InputDC == null) {
                         showMessage("You must complete the data for obtain recomended places.");
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, ImputDataFragment.newInstance()).commit();
-                    }else {
+                    } else {
                         maps.searchNearbyPlaces();
                     }
                 }
@@ -168,8 +164,8 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_language:
-            showDialogLanguage();
-            return true;
+                showDialogLanguage();
+                return true;
 
             case R.id.action_recommended_option:
                 showDialogRecomendedOption();
@@ -183,58 +179,54 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void showDialogLanguage(){
-  final String[] language ={"EN", "IT", "ES"};
+    public void showDialogLanguage() {
+        final String[] language = {"EN", "IT", "ES"};
 
-                final boolean[] itemsChecked = new boolean[language.length];
 
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-                //alertDialog.setIcon(R.drawable.dialogopng);
-                alertDialog.setTitle("Select Language");
 
-                alertDialog.setMultiChoiceItems(language, itemsChecked, new DialogInterface.OnMultiChoiceClickListener(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        //alertDialog.setIcon(R.drawable.dialogopng);
+        alertDialog.setTitle("Select Language");
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        itemsChecked[which] = isChecked;
-                    }
-                });
-
-                alertDialog.setPositiveButton("Accept", new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        Toast.makeText(getApplicationContext(), "Dutch", Toast.LENGTH_SHORT).show();
-                        setLocale("nl");
-                    }
-                });
-
-                alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        showMessage("You must restart de applications");
-                        setLocale("");
-                    }
-                });
-                alertDialog.show();
-
+        alertDialog.setSingleChoiceItems(language, 1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
             }
+        });
+
+
+        alertDialog.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                showMessage("You must restart de applications");
+                setLocale(language[which]);
+            }
+        });
+
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                setLocale("");
+            }
+        });
+        alertDialog.show();
+
+
+    }
 
     public void setLocale(String lang) {
 
-        Locale locale = new Locale(lang);
+        Locale locale = new Locale(lang.toLowerCase());
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
     }
 
-    public void showDialogRecomendedOption(){
-        final String[] language ={"EN", "IT", "ES"};
+    public void showDialogRecomendedOption() {
+        final String[] language = {"EN", "IT", "ES"};
 
         final boolean[] itemsChecked = new boolean[language.length];
 
@@ -242,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         //alertDialog.setIcon(R.drawable.dialogopng);
         alertDialog.setTitle("Select Language");
 
-        alertDialog.setMultiChoiceItems(language, itemsChecked, new DialogInterface.OnMultiChoiceClickListener(){
+        alertDialog.setMultiChoiceItems(language, itemsChecked, new DialogInterface.OnMultiChoiceClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
@@ -250,21 +242,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        alertDialog.setPositiveButton("Accept", new DialogInterface.OnClickListener()
-        {
+        alertDialog.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
+            public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getApplicationContext(), "Dutch", Toast.LENGTH_SHORT).show();
                 setLocale("nl");
             }
         });
 
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
-        {
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
+            public void onClick(DialogInterface dialog, int which) {
                 showMessage("You must restart de applications");
                 setLocale("");
             }
@@ -274,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void showMapa(){
+    public void showMapa() {
         if (maps == null) {
             maps = MapsFragment.newInstance(this);
 
@@ -285,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.container, supportMapFragment).commit();
     }
 
-    public void showMessage(String mensaje){
+    public void showMessage(String mensaje) {
         Toast.makeText(this, mensaje, Toast.LENGTH_LONG).show();
     }
 
