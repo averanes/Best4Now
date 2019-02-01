@@ -308,11 +308,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                if (isChecked) {
-                    itemsChecked[which] = true;
-                } else {
-                    itemsChecked[which] = false;
-                }
+                itemsChecked[which] = isChecked;
             }
         });
 
@@ -321,19 +317,21 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 //Toast.makeText(getApplicationContext(), "Dutch", Toast.LENGTH_SHORT).show();
 
+                boolean atLeastOneSelected = false;
 
-                int selectedElementCount = 0;
                 for (int i = 0; i < itemsChecked.length; i++) {
                     if (itemsChecked[i]) {
-                        selectedElementCount++;
+                        atLeastOneSelected = true;
+                        break;
                     }
                 }
 
-                if (selectedElementCount == 0) {
+                // si no hay ningun elemento seleccionado
+                if (!atLeastOneSelected) {
                     showMessage("You must select one recommendation at least");
                 }
 
-                // si al menos tiene seleccionada una recomendacion
+                // al menos tiene seleccionada una recomendacion
                 else {
 
                     if (selectedRecommendations == null) {
