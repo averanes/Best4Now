@@ -15,4 +15,11 @@
     <string name="night_horario">Night</string>
     <string name="deep_night">Deep Night</string>
 
+    <string-array name="option_list">
+        <item>Not recommended</item>
+        <item>Normal recommendation</item>
+        <item>High Recommended</item>
+        <item>Very high recommendation</item>
+    </string-array>
 </resources>
+
