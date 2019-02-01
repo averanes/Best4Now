@@ -47,7 +47,9 @@
 
     <string name="input_parameters">Parámetros de entrada</string>
 
-    <string name="recomended_option">Opciones recomendadas</string>
+    <string name="search_by_name">Buscar por nombre</string>
+
+    <string name="recomended_options">Opciones recomendadas</string>
 
     <string name="language">Lenguage</string>
 
@@ -60,6 +62,20 @@
     <string name="obtained_data_automatically">Datos obtenidos automáticamente</string>
 
     <string name="schedule">Horario</string>
+
+    <string-array name="gender_list">
+        <item>Femminile</item>
+        <item>Maschile</item>
+        <item>Gruppo</item>
+    </string-array>
+
+    <string-array name="grouped_age_list">
+        <item>0-15</item>
+        <item>16-45</item>
+        <item>46...</item>
+    </string-array>
+
+    <string name="recommended_place_with_data">Lugares recomendados con estos datos</string>
 
 </resources>
 
