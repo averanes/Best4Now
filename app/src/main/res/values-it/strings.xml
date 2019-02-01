@@ -64,9 +64,9 @@
     <string name="schedule">Orario</string>
 
     <string-array name="gender_list">
-        <item>Female</item>
-        <item>Male</item>
-        <item>Collective</item>
+        <item>Femenile</item>
+        <item>Maschile</item>
+        <item>Gruppo</item>
     </string-array>
 
     <string-array name="grouped_age_list">
@@ -75,6 +75,14 @@
         <item>46...</item>
     </string-array>
 
+    <string-array name="amount_person_list">
+        <item>1</item>
+        <item>2</item>
+        <item>Gruppo</item>
+    </string-array>
+
     <string name="recommended_place_with_data">Luoghi consigliati con questi dati</string>
+
+    <string name="place">Place</string>
 
 </resources>

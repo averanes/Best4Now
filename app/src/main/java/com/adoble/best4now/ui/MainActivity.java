@@ -177,9 +177,9 @@ public class MainActivity extends AppCompatActivity {
 
         weather = weatherP;
 
-        String value="Temperature: "+ ((long)weather.getTemperature())+"°C "+Weather.temperatureConsiderationName(weather.getTemperatureConsideration());
+        String value= this.getResources().getString(R.string.temperature) + ": "+ ((long)weather.getTemperature())+"°C "+Weather.temperatureConsiderationName(weather.getTemperatureConsideration());
 
-        value+="\nWeather: "+weather.getWeatherDescription()+" "+Weather.weatherConsiderationName(weather.getWeatherConsideration());
+        value+="\n" + this.getResources().getString(R.string.weather) + ": "+weather.getWeatherDescription()+" "+Weather.weatherConsiderationName(weather.getWeatherConsideration());
 
        // value+="\nHorary: "+weather.getDay().get(Calendar.HOUR_OF_DAY)+":"+weather.getDay().get(Calendar.MINUTE)+" "+Weather.horarioConsiderationName(weather.getHorarioConsideration());
 
@@ -246,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
                     // maps.showLastKnowLocation();
 
                     if (InputDC == null) {
-                        showMessage("You must complete the data for obtain recomended places.");
+                        showMessage(this.getResources().getString(R.string.must_complete_recommended_places));
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, ImputDataFragment.newInstance()).commit();
                     }
                         maps.searchNearbyPlaces();
@@ -334,11 +334,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        alertDialog.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton(this.getResources().getString(R.string.accept), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(selectedOption!=-1){
-                    showMessage("You must restart de applications");
+                    showMessage(getResources().getString(R.string.restart_application));
 
                     SharedPreferences.Editor edit =  getSharedPreferences("AUTHENTICATION_FILE_NAME", Context.MODE_PRIVATE).edit();
 
@@ -354,7 +354,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        alertDialog.setNegativeButton(this.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -419,7 +419,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        alertDialog.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton(this.getResources().getString(R.string.accept), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //Toast.makeText(getApplicationContext(), "Dutch", Toast.LENGTH_SHORT).show();
@@ -435,7 +435,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // si no hay ningun elemento seleccionado
                 if (!atLeastOneSelected) {
-                    showMessage("You must select one recommendation at least");
+                    showMessage(getResources().getString(R.string.select_one_recommendation));
                 }
 
                 // al menos tiene seleccionada una recomendacion
@@ -461,7 +461,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        alertDialog.setNegativeButton(this.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //showMessage("You must restart de applications");
@@ -505,7 +505,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Place place = Autocomplete.getPlaceFromIntent(data);
-                Log.i("Best4Now", "Place: " + place.getName() + ", " + place.getId());
+                Log.i(getResources().getString(R.string.app_name), getResources().getString(R.string.place) + ": " + place.getName() + ", " + place.getId());
 
                 MapsFragment.mainPlace = new com.adoble.best4now.domain.Place(place.getLatLng());
                 showMapaAndSearchNearbyPlaces();
@@ -514,7 +514,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.
                 Status status = Autocomplete.getStatusFromIntent(data);
-                Log.i("Best4Now", status.getStatusMessage());
+                Log.i(getResources().getString(R.string.app_name), status.getStatusMessage());
 
                 showMessage(status.getStatusMessage());
             } else if (resultCode == RESULT_CANCELED) {
@@ -539,7 +539,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            Log.w("Best4Now", "signInResult:failed code=" + e.getStatusCode());
+            Log.w(getResources().getString(R.string.app_name), "signInResult:failed code=" + e.getStatusCode());
             updateUI(null);
         }
     }
