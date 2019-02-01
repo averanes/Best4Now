@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Best4Now</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="low_temperature">Bassa temperatura</string>
+    <string name="normal_temperature">Temperatura normale</string>
+    <string name="high_temperature">Alta temperatura</string>
+
+    <string name="good_weather">Bel tempo</string>
+    <string name="moderate_weather">Tempo moderato</string>
+    <string name="bad_weather">Brutto tempo</string>
+
+    <string name="morning_horario">Mattina</string>
+    <string name="afternoon_horario">Pomeriggio</string>
+    <string name="night_horario">Notte</string>
+    <string name="deep_night">Notte profonda</string>
+
+    <string-array name="option_list">
+        <item>Non consigliato</item>
+        <item>Raccomandazione normale</item>
+        <item>Alto raccomandato</item>
+        <item>Raccomandazione molto alta</item>
+    </string-array>
+
+</resources>
