@@ -75,7 +75,15 @@
         <item>46...</item>
     </string-array>
 
+    <string-array name="amount_person_list">
+        <item>1</item>
+        <item>2</item>
+        <item>Group</item>
+    </string-array>
+
     <string name="recommended_place_with_data">Recommended places with this data</string>
+
+    <string name="place">Place</string>
 
 </resources>
 
