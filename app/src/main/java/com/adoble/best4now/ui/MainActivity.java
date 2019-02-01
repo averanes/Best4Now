@@ -9,7 +9,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,14 +16,20 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
 import android.widget.Toast;
 
 import com.adoble.best4now.R;
 import com.adoble.best4now.domain.InputDataCriteria;
 import com.adoble.best4now.domain.Weather;
 import com.adoble.best4now.util.ExternalDbOpenHelper;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 
 import com.google.android.gms.maps.SupportMapFragment;
@@ -36,11 +41,11 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+    public static GoogleSignInAccount account;
 
     public static MainActivity mainActivity;
     private MapsFragment maps;
@@ -58,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
     boolean mapsActive = true;
 
     final int AUTOCOMPLETE_REQUEST_CODE = 1;
+    final int RC_SIGN_IN = 3;
+    GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        if (maps == null) {
+       /* if (maps == null) {
             SupportMapFragment supportMapFragment = SupportMapFragment.newInstance();
             maps = MapsFragment.newInstance(this);
             supportMapFragment.getMapAsync(maps);
@@ -86,7 +93,8 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.container, supportMapFragment).commit();
 
 
-        }
+        }*/
+
 
         ActionBar actionBar = getSupportActionBar();
         //setSupportActionBar(myToolbar);
@@ -95,6 +103,40 @@ public class MainActivity extends AppCompatActivity {
         //actionBar.setDisplayHomeAsUpEnabled(true);
         //actionBar.
 
+
+        // Configure sign-in to request the user's ID, email address, and basic
+// profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                startActivityForResult(signInIntent, RC_SIGN_IN);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // Check for existing Google Sign In account, if the user is already signed in
+// the GoogleSignInAccount will be non-null.
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+        if(account!=null){
+        updateUI(account);
+        }
+        else{
+            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+            startActivityForResult(signInIntent, RC_SIGN_IN);
+        }
     }
 
     public void performPrediction() {
@@ -440,9 +482,12 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, supportMapFragment).commit();
 
-        maps.searchNearbyPlaces();
-
         mapsActive = true;
+    }
+
+    public void showMapaAndSearchNearbyPlaces() {
+        showMapa();
+        maps.searchNearbyPlaces();
     }
 
     public void showMessage(String mensaje) {
@@ -463,7 +508,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("Best4Now", "Place: " + place.getName() + ", " + place.getId());
 
                 MapsFragment.mainPlace = new com.adoble.best4now.domain.Place(place.getLatLng());
-                showMapa();
+                showMapaAndSearchNearbyPlaces();
 
 
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
@@ -475,6 +520,38 @@ public class MainActivity extends AppCompatActivity {
             } else if (resultCode == RESULT_CANCELED) {
                 // The user canceled the operation.
             }
+        }else // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+            if (requestCode == RC_SIGN_IN) {
+                // The Task returned from this call is always completed, no need to attach
+                // a listener.
+                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                handleSignInResult(task);
+            }
+
+    }
+
+    private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+
+            // Signed in successfully, show authenticated UI.
+            updateUI(account);
+        } catch (ApiException e) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            Log.w("Best4Now", "signInResult:failed code=" + e.getStatusCode());
+            updateUI(null);
+        }
+    }
+
+    public void updateUI(GoogleSignInAccount account){
+
+        if(account!=null && !account.getEmail().isEmpty()) {
+            findViewById(R.id.sign_in_button).setVisibility(View.GONE);
+
+            showMessage("" + account.getDisplayName());
+
+            showMapa();
         }
     }
 

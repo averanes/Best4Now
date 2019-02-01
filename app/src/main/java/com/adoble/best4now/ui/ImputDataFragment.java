@@ -21,10 +21,6 @@ import com.adoble.best4now.domain.Weather;
 import com.adoble.best4now.util.TypePlace;
 import com.adoble.best4now.util.WeatherRequest;
 
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class ImputDataFragment extends Fragment {
@@ -124,7 +120,7 @@ public class ImputDataFragment extends Fragment {
 
                 MainActivity.mainActivity.performPrediction();
 
-                MainActivity.mainActivity.showMapa();
+                MainActivity.mainActivity.showMapaAndSearchNearbyPlaces();
             }
         });
 
@@ -196,12 +192,12 @@ public class ImputDataFragment extends Fragment {
     }
 
 /*
-    public void showMapa(View view){
-        MainActivity.mainActivity.showMapa(view);
+    public void showMapaAndSearchNearbyPlaces(View view){
+        MainActivity.mainActivity.showMapaAndSearchNearbyPlaces(view);
 
     }*/
 
-    /*public View showMapa(){
+    /*public View showMapaAndSearchNearbyPlaces(){
         MainActivity.mainActivity.showMap();
 
         return null;
