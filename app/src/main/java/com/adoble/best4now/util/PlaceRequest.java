@@ -111,8 +111,8 @@ public class PlaceRequest extends AsyncTask<String, Integer, JSONArray> {
         MapsFragment.showPlacesInMap();
 
         if (requestCount < REQUEST_LIMIT && !nextPageToken.equals("")) {
-           // progressBar.setVisibility(View.VISIBLE);
-            final String url = PLACES_REQUEST + "&pagetoken=" + nextPageToken;
+           // progressBar.setVisibility(View.VISIBLE);.
+            final String url = PLACES_REQUEST + "&location=" + MapsFragment.mainPlace.getLocation().latitude + "," + MapsFragment.mainPlace.getLocation().longitude+ "&pagetoken=" + nextPageToken;
 
             new Handler().postDelayed(new Runnable() {
                 @Override
