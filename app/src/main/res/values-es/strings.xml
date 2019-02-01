@@ -1,0 +1,66 @@
+<resources>
+    <string name="app_name">Best4Now</string>
+
+    <string name="low_temperature">Baja Temperatura</string>
+    <string name="normal_temperature">Temperature Normal</string>
+    <string name="high_temperature">Alta Temperatura</string>
+
+    <string name="good_weather">Buen Clima</string>
+    <string name="moderate_weather">Clima Moderado</string>
+    <string name="bad_weather">Mal Tiempo</string>
+
+    <string name="morning_horario">Mañana</string>
+    <string name="afternoon_horario">Tarde</string>
+    <string name="night_horario">Noche</string>
+    <string name="deep_night">Madrugada</string>
+
+    <string-array name="kind_recommendation_list">
+        <item>No recomendado</item>
+        <item>Recomendación normal</item>
+        <item>Alta recomendación</item>
+        <item>Altamente recomendado</item>
+    </string-array>
+
+    <string name="title_select_kind_recommendation">Seleccionar tipo de recomendación</string>
+
+    <string name="center_search_nearby_place">Punto para realizar la búsqueda</string>
+
+    <string name="temperature">Temperatura</string>
+
+    <string name="celsius_degrees">°C </string>
+
+    <string name="weather">Clima</string>
+
+    <string name="must_complete_recommended_places">Debe completar los datos para mostrar lugares cercanos.</string>
+
+    <string name="select_language">Selecccionar Lenguaje</string>
+
+    <string name="accept">Aceptar</string>
+
+    <string name="restart_application">Debe reiniciar la aplicación</string>
+
+    <string name="cancel">Cancelar</string>
+
+    <string name="select_one_recommendation">Debe seleccionar al menos un tipo de recomendación</string>
+
+    <string name="nearby_places">Lugares cercanos</string>
+
+    <string name="input_parameters">Parámetros de entrada</string>
+
+    <string name="recomended_option">Opciones recomendadas</string>
+
+    <string name="language">Lenguage</string>
+
+    <string name="gender">Género</string>
+
+    <string name="age">Edad</string>
+
+    <string name="persons">Personas</string>
+
+    <string name="obtained_data_automatically">Datos obtenidos automáticamente</string>
+
+    <string name="schedule">Horario</string>
+
+
+</resources>
+
