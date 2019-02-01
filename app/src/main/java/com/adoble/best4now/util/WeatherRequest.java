@@ -18,6 +18,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 
 public class WeatherRequest extends AsyncTask<LatLng, Integer, Weather> {
@@ -90,8 +92,34 @@ public class WeatherRequest extends AsyncTask<LatLng, Integer, Weather> {
             }
 
             if (jsonObject.has("dt")) {
-                currentWeather.setDay(jsonObject.getLong("dt") * 1000);
+                currentWeather.setDay(jsonObject.getLong("dt") * 1000L);
             }
+
+
+
+            //************obtain the time ***********
+           /* GregorianCalendar g=new GregorianCalendar();
+            long timestamp = g.getTimeInMillis()/1000 + g.getTimeZone().getRawOffset()/1000; // Current UTC date/time expressed as seconds since midnight, January 1, 1970 UTC
+
+            String fullCurrentUrlTime = "https://maps.googleapis.com/maps/api/timezone/json?location="+latLng[0].latitude + "," + latLng[0].longitude+"&timestamp="+;
+
+            String fullCurrentUrl2 = basicUrl + currentUrl + "lat=" + latLng[0].latitude + "&lon=" + latLng[0].longitude + "&appid=" + MainActivity.mainActivity.getString(R.string.open_weather_map_key);
+
+
+                URL url2 = new URL(fullCurrentUrl);
+
+                HttpURLConnection httpURLConnection2 = (HttpURLConnection) url.openConnection();
+                httpURLConnection2.setRequestMethod("GET");
+                httpURLConnection2.connect();
+
+                String line2;
+                StringBuilder stringBuilder2 = new StringBuilder("");
+                BufferedReader bufferedReader2 = new BufferedReader(new InputStreamReader(httpURLConnection2.getInputStream()));
+                while ((line2 = bufferedReader2.readLine()) != null) {
+                    stringBuilder.append(line2);
+                }
+
+                httpURLConnection.disconnect();*/
 
             return currentWeather;
 

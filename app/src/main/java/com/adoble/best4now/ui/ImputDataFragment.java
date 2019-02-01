@@ -25,8 +25,6 @@ import java.util.Calendar;
 
 public class ImputDataFragment extends Fragment {
 
-    private ViewModel2 mViewModel;
-
 
 
     public static ImputDataFragment newInstance() {
@@ -174,7 +172,14 @@ public class ImputDataFragment extends Fragment {
 
         m.performPrediction();
 
-        String result= "Place recomendation with this data:\n";
+        String welcome = "";
+        if(MainActivity.mainActivity.account!=null &&  MainActivity.mainActivity.account.getDisplayName() != null ){
+            welcome = "Hello "+MainActivity.mainActivity.account.getDisplayName()+", it is recommended you different place by type with the conditions now.\n";
+        }else{
+            welcome="Place recomendation with this data.\n\n";
+        }
+
+        String result= welcome+"Here you have some recomendation:\n\n";
         for (int i = 0; i < 6; i++) {
             result+= TypePlace.getTypeDescription(i) +" ("+Place.getRecomendedDescription(m.getApplicationContext(), m.predictionCalculated[i+7])+")\n";
         }
@@ -187,7 +192,6 @@ public class ImputDataFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(ViewModel2.class);
         // TODO: Use the ViewModel
     }
 

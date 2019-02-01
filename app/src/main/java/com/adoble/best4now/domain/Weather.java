@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class Weather {
 
@@ -91,8 +92,14 @@ public class Weather {
 
     public void setDay(long dayLong) {
 
-        this.day = new GregorianCalendar();
-        //this.day.setTimeInMillis(dayLong);
+
+        long tiempoActual = System.currentTimeMillis();
+
+        dayLong+=tiempoActual-dayLong;
+
+
+        this.day = new GregorianCalendar(new Locale("CU"));
+        this.day.setTimeInMillis(dayLong);
         int hour = this.day.get(Calendar.HOUR_OF_DAY);
 
         // mañana

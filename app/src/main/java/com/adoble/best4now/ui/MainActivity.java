@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
     final int AUTOCOMPLETE_REQUEST_CODE = 1;
     final int RC_SIGN_IN = 3;
-    GoogleSignInClient mGoogleSignInClient;
+    private GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -547,6 +547,7 @@ public class MainActivity extends AppCompatActivity {
     public void updateUI(GoogleSignInAccount account){
 
         if(account!=null && !account.getEmail().isEmpty()) {
+            this.account = account;
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
 
             showMessage("" + account.getDisplayName());
