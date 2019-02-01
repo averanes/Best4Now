@@ -1,8 +1,10 @@
 package com.adoble.best4now.domain;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.adoble.best4now.R;
 import com.adoble.best4now.util.TypePlace;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -28,9 +30,10 @@ public class Place {
     private String description;
 
     private Marker marker;
+    private int searchId;
 
 
-    public Place(LatLng location, String icon, String id, String name, String place_id, String vicinity) {
+    public Place(LatLng location, String icon, String id, String name, String place_id, String vicinity, int searchId) {
         this.location = location;
         this.icon = icon;
         this.id = id;
@@ -38,6 +41,7 @@ public class Place {
         this.place_id = place_id;
         this.vicinity = vicinity;
         this.description = name;
+        this.searchId = searchId;
        // this.type = new TypePlace();
     }
 
@@ -82,9 +86,13 @@ public class Place {
     }
 
     public void removeMarker() {
-       if(this.marker !=null){
-           this.marker.remove();
-       }
+
+        try {
+            if(this.marker !=null){
+                this.marker.remove();
+            }
+        }catch (Exception e){}
+
     }
 
 
@@ -154,24 +162,21 @@ public class Place {
         return recomended;
     }
 
-    public String getRecomendedDescription() {
+    public String getRecomendedDescription(Context context) {
 
-        switch (recomended){
-            case 0: return "Neutral";
-            case 1: return "Recomended";
-            case 2: return "High Recomended";
-        }
-        return "Not reomended";
+        return getRecomendedDescription(context, recomended);
     }
 
-    public static String getRecomendedDescription(int recomended) {
+    public static String getRecomendedDescription(Context context, int recomended) {
 
-        switch (recomended){
-            case 0: return "Neutral";
-            case 1: return "Recomended";
-            case 2: return "High Recomended";
-        }
-        return "Not reomended";
+
+        String[] language = context.getResources().getStringArray(R.array.kind_recommendation_list);
+
+        recomended++;
+        if(recomended >= 0 && recomended < language.length)
+        return language[recomended];
+
+        return "Recommendation Unavailable";
     }
 
     public void setRecomended(int recomended) {
@@ -184,5 +189,13 @@ public class Place {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getSearchId() {
+        return searchId;
+    }
+
+    public void setSearchId(int searchId) {
+        this.searchId = searchId;
     }
 }

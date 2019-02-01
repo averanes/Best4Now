@@ -180,8 +180,7 @@ public class ImputDataFragment extends Fragment {
 
         String result= "Place recomendation with this data:\n";
         for (int i = 0; i < 6; i++) {
-
-            result+= TypePlace.getTypeDescription(i) +" ("+Place.getRecomendedDescription(m.predictionCalculated[i+7])+")\n";
+            result+= TypePlace.getTypeDescription(i) +" ("+Place.getRecomendedDescription(m.getApplicationContext(), m.predictionCalculated[i+7])+")\n";
         }
 
 

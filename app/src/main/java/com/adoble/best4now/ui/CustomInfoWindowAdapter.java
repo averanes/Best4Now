@@ -41,18 +41,19 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         TextView tvLng = (TextView) v.findViewById(R.id.recomended);
         if(p!=null){
             name = p.getName();
-            recomend = p.getRecomendedDescription();
+            recomend = p.getRecomendedDescription(activity.getApplicationContext());
 
            type.setText(p.getDescription());
-           tvLng.setText(recomend);
+
         }else{
+
             type.setVisibility(View.GONE);
-            tvLng.setVisibility(View.GONE);
         }
 
         TextView tvLat = (TextView) v.findViewById(R.id.title);
         tvLat.setText(name);
 
+        tvLng.setText(recomend);
 
 
 

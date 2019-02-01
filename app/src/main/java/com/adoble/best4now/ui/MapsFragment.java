@@ -2,6 +2,7 @@ package com.adoble.best4now.ui;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Criteria;
@@ -9,6 +10,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -18,7 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.adoble.best4now.domain.Weather;
 import com.adoble.best4now.util.Permissions;
 import com.adoble.best4now.util.PlaceRequest;
 import com.adoble.best4now.R;
@@ -40,7 +41,7 @@ import java.util.Locale;
 
 import static android.content.Context.LOCATION_SERVICE;
 
-public class MapsFragment extends MapFragment implements OnMapReadyCallback, LocationListener, GoogleMap.OnInfoWindowClickListener{
+public class MapsFragment extends MapFragment implements OnMapReadyCallback, LocationListener, GoogleMap.OnInfoWindowClickListener,  GoogleMap.OnInfoWindowLongClickListener{
 
     public static GoogleMap mMap;
     private static FragmentActivity main;
@@ -111,13 +112,13 @@ public class MapsFragment extends MapFragment implements OnMapReadyCallback, Loc
         //updateLastKnowLocation();
         Place p = new Place(new LatLng(39.362136, 16.226346)); //University of Calabria
 
-        showPositionInMap(p);
+        showPositionInMapAndSearchWeather(p);
 
-        searchNearbyPlaces();
+        //searchNearbyPlaces();
 
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.getUiSettings().setMapToolbarEnabled(true);
+        //mMap.getUiSettings().setMapToolbarEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
 
 //para cuando se de clic en un elemento que se muestre en el centro del mapa
@@ -146,7 +147,7 @@ public class MapsFragment extends MapFragment implements OnMapReadyCallback, Loc
 
             @Override
             public void onMapClick(LatLng latLng) {
-                showPositionInMap(new Place(latLng));
+                showPositionInMapAndSearchWeather(new Place(latLng));
             }
         });
 
@@ -156,13 +157,19 @@ public class MapsFragment extends MapFragment implements OnMapReadyCallback, Loc
 
 
         mMap.setOnInfoWindowClickListener(this);
+        mMap.setOnInfoWindowLongClickListener(this);
+    }
+
+    public void showPositionInMapAndSearchWeather(Place newPlace){
+        showPositionInMap(newPlace);
+
+        new WeatherRequest().execute(mainPlace.getLocation());
+
     }
 
     public void showPositionInMap(Place newPlace){
         if( mainPlace !=null )
             mainPlace.removeMarker();
-
-
 
         MarkerOptions markerOptions = new MarkerOptions();
 
@@ -172,19 +179,19 @@ public class MapsFragment extends MapFragment implements OnMapReadyCallback, Loc
         if(newPlace.getName() !=null && !newPlace.getName().isEmpty()){
             markerOptions.title(newPlace.getName());
         }else{
-            markerOptions.title(newPlace.getLocation().latitude + " : " + newPlace.getLocation().longitude);
+            markerOptions.title(MainActivity.mainActivity.getString(R.string.center_search_nearby_place));
         }
 
+        Marker m = mMap.addMarker(markerOptions);
+        m.showInfoWindow();
         // Placing a marker on the touched position
-        newPlace.setMarker(mMap.addMarker(markerOptions));
-                //.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        newPlace.setMarker(m);
+        //.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(newPlace.getLocation(),
                 MapsFragment.this.zoom), 3000, null);
 
         mainPlace = newPlace;
-
-        new WeatherRequest().execute(mainPlace.getLocation());
 
     }
 
@@ -223,16 +230,19 @@ public class MapsFragment extends MapFragment implements OnMapReadyCallback, Loc
         return null;
     }
 
+    public static int searchNumber=0;
     @SuppressLint("MissingPermission")
     public void searchNearbyPlaces() {
-
+        searchNumber++;
         String url = PlaceRequest.PLACES_REQUEST  + "&location=" + mainPlace.getLocation().latitude + "," + mainPlace.getLocation().longitude;
 
-            removeAlMarkerPlace();
+        removeAlMarkerPlace();
+
+        showPositionInMap(mainPlace);
 
         MapsFragment.places = new ArrayList<Place>();
 
-        new PlaceRequest(MapsFragment.main).execute(url);
+        new PlaceRequest(MapsFragment.main, searchNumber).execute(url);
     }
 
 
@@ -246,13 +256,21 @@ public class MapsFragment extends MapFragment implements OnMapReadyCallback, Loc
     }
 
     public void removeAlMarkerPlace(){
+        if(mMap!=null){
+            try {
+                mMap.clear();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
-        if(MapsFragment.places!=null){
+
+        }
+        /*if(MapsFragment.places!=null){
 
             for (int i = 0; i < MapsFragment.places.size(); i++) {
                 MapsFragment.places.get(i).removeMarker();
             }
-        }
+        }*/
     }
 
 
@@ -300,7 +318,7 @@ public class MapsFragment extends MapFragment implements OnMapReadyCallback, Loc
             if(location!=null){
                 LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-                showPositionInMap(new Place(latLng));
+                showPositionInMapAndSearchWeather(new Place(latLng));
             }
         }
 
@@ -321,7 +339,7 @@ public class MapsFragment extends MapFragment implements OnMapReadyCallback, Loc
         if(location!=null){
             LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-            showPositionInMap(new Place(latLng));
+            showPositionInMapAndSearchWeather(new Place(latLng));
         }
      }
 
@@ -382,6 +400,32 @@ public void onLocationChanged(Location location) {
     @Override
     public void onInfoWindowClick(Marker marker) {
 
+        Double latitude = marker.getPosition().latitude;
+        Double longitude = marker.getPosition().longitude;
+
+        String uri = "geo:" + latitude + ","
+                +longitude + "?q=" + latitude
+                + "," + longitude;
+        MainActivity.mainActivity.startActivity(new Intent(android.content.Intent.ACTION_VIEW,
+                Uri.parse(uri)));
+
+    }
+
+    @Override
+    public void onInfoWindowLongClick(Marker marker) {
+        Double latitude = marker.getPosition().latitude;
+        Double longitude = marker.getPosition().longitude;
+
+        //String uri = "http://maps.google.com/maps?saddr=" +latitude+","+longitude;
+        String uri = "http://maps.google.com/maps?q=" +latitude+","+longitude;
+
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        String ShareSub = marker.getTitle();
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, ShareSub);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, uri);
+
+        MainActivity.mainActivity.startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
 }
 

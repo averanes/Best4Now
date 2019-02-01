@@ -75,7 +75,21 @@ public class ShowPlaceOnMap extends AsyncTask<Place, Integer, Place>
 
         super.onPostExecute(place);
 
-        //if(place.getRecomended()<1)return;
+
+        boolean showPlace = false;
+
+        for (int recomendation : MainActivity.mainActivity.getSelectedRecommendations()) {
+            if(place.getRecomended() == recomendation){
+                showPlace = true;
+                break;
+            }
+        }
+
+        if(!showPlace)return;
+
+
+
+      if(place.getSearchId() != MapsFragment.searchNumber) return;;
 
         Marker marker = MapsFragment.mMap.addMarker(new MarkerOptions()
                 .position(place.getLocation())
@@ -84,6 +98,7 @@ public class ShowPlaceOnMap extends AsyncTask<Place, Integer, Place>
                 .icon(BitmapDescriptorFactory.fromBitmap(place.getBmpIcon()) ));
 
         marker.setTag(place);
+
         place.setMarker(marker);
 
     }

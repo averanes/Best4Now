@@ -89,7 +89,7 @@ public class ExternalDbOpenHelper extends SQLiteOpenHelper {
             checkDb = SQLiteDatabase.openDatabase(path, null,
                     SQLiteDatabase.OPEN_READONLY);
         } catch (SQLException e) {
-            Log.e(this.getClass().toString(), "Error while checking db");
+           // Log.e(this.getClass().toString(), "Error while checking db");
         }
 //Android doesn’t like resource leaks, everything should
         // be closed

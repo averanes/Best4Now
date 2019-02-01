@@ -25,6 +25,7 @@ public class InputDataCriteria {
     }
 
     public InputDataCriteria() {
+        this.age = 1;
     }
 
     public Place getPlaceCenter() {

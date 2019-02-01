@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.adoble.best4now.R;
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -43,12 +45,26 @@ public class MainActivity extends AppCompatActivity {
     // se pueden almacenar valores como -1, 0, 1, 2 (tipos de recomendacion)
     private List<Integer> selectedRecommendations;
 
+    boolean mapsActive = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
         mainActivity = this;
+
+        // la primera vez q se ejecuta
+        if (selectedRecommendations == null) {
+            selectedRecommendations = new ArrayList<Integer>();
+
+            // la primera vez por default seleccionamos todos
+            selectedRecommendations.add(-1);
+            selectedRecommendations.add(0);
+            selectedRecommendations.add(1);
+            selectedRecommendations.add(2);
+        }
+
 
         if (maps == null) {
             SupportMapFragment supportMapFragment = SupportMapFragment.newInstance();
@@ -105,8 +121,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void setWeather(Weather weatherP) {
 
-        Toast.makeText(this.getApplicationContext(), /*"horary: "+weatherP.getDay().toString()+*/" Weather: " + weatherP.getWeatherDescription() + " temp: " + weatherP.getTemperature(), Toast.LENGTH_LONG).show();
         weather = weatherP;
+
+        String value="Temperature: "+ ((long)weather.getTemperature())+"°C "+Weather.temperatureConsiderationName(weather.getTemperatureConsideration());
+
+        value+="\nWeather: "+weather.getWeatherDescription()+" "+Weather.weatherConsiderationName(weather.getWeatherConsideration());
+
+       // value+="\nHorary: "+weather.getDay().get(Calendar.HOUR_OF_DAY)+":"+weather.getDay().get(Calendar.MINUTE)+" "+Weather.horarioConsiderationName(weather.getHorarioConsideration());
+
+        showMessage(value);
+
+
 
         performPrediction();
     }
@@ -155,6 +180,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_input_data:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, ImputDataFragment.newInstance()).commit();
                 // User chose the "Settings" item, show the app settings UI...
+
+                mapsActive = true;
                 return true;
 
             case R.id.action_nearby_places:
@@ -167,9 +194,9 @@ public class MainActivity extends AppCompatActivity {
                     if (InputDC == null) {
                         showMessage("You must complete the data for obtain recomended places.");
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, ImputDataFragment.newInstance()).commit();
-                    } else {
-                        maps.searchNearbyPlaces();
                     }
+                        maps.searchNearbyPlaces();
+
                 }
                 // User chose the "Favorite" action, mark the current item
                 // as a favorite...
@@ -267,13 +294,17 @@ public class MainActivity extends AppCompatActivity {
         return context.createConfigurationContext(configuration);
     }
 
-    @SuppressWarnings("deprecation")
+   // @SuppressWarnings("deprecation")
     private Context updateResourcesLocaleLegacy(Context context, Locale locale) {
         Resources resources = context.getResources();
         Configuration configuration = resources.getConfiguration();
         configuration.locale = locale;
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
         return context;
+    }
+
+    public List<Integer> getSelectedRecommendations() {
+        return selectedRecommendations;
     }
 
     public void showDialogRecomendedOption() {
@@ -287,15 +318,6 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.setTitle(R.string.title_select_kind_recommendation);
 
 
-        // la primera vez q se ejecuta
-        if (selectedRecommendations == null) {
-            selectedRecommendations = new ArrayList<>();
-
-            // la primera vez por default seleccionamos todos menos el "NO REOMENDADO"
-            selectedRecommendations.add(0);
-            selectedRecommendations.add(1);
-            selectedRecommendations.add(2);
-        }
 
         // si la lista es mayor q cero, es pq tiene al menos un elemento
         if (selectedRecommendations.size() > 0) {
@@ -346,6 +368,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
+                    if(mapsActive)
+                    maps.searchNearbyPlaces();
+
                     dialog.cancel();
                 }
             }
@@ -371,6 +396,10 @@ public class MainActivity extends AppCompatActivity {
         supportMapFragment.getMapAsync(maps);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container, supportMapFragment).commit();
+
+        maps.searchNearbyPlaces();
+
+        mapsActive = true;
     }
 
     public void showMessage(String mensaje) {

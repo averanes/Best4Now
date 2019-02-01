@@ -23,5 +23,7 @@
     </string-array>
 
     <string name="title_select_kind_recommendation">Select kind of recommendation</string>
+
+    <string name="center_search_nearby_place">Point for search nearby place</string>
 </resources>
 

@@ -22,17 +22,26 @@ public class PlaceRequest extends AsyncTask<String, Integer, JSONArray> {
 
     public static String PLACES_REQUEST = "";
     public static String nextPageToken="";
-    public static int requestCount = 0, REQUEST_LIMIT = 4;
+    public int requestCount = 0, REQUEST_LIMIT = 4, idSearch;
 
     public Context context;
 
 
 
 
-    public PlaceRequest(Context context){
-        this.context = context;
 
+    public PlaceRequest(Context context, int idSearch){
+        this.context = context;
+        this.requestCount = 0;
+        this.idSearch = idSearch;
     }
+
+    public PlaceRequest(Context context, int requestCount, int idSearch){
+        this.context = context;
+        this.requestCount = requestCount;
+        this.idSearch = idSearch;
+    }
+
     //ProgressDialog progressBar;
 
     @Override
@@ -80,7 +89,7 @@ public class PlaceRequest extends AsyncTask<String, Integer, JSONArray> {
         //if(progressBar!=null)progressBar.cancel(); //setVisibility(View.GONE);
         requestCount++;
         try {
-            for (int i = 0; i < jsonArray.length(); i++) {
+            for (int i = 0; i < jsonArray.length() && idSearch == MapsFragment.searchNumber; i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 JSONObject location = jsonObject.getJSONObject("geometry").getJSONObject("location");
                 String name = jsonObject.getString("name");
@@ -90,7 +99,7 @@ public class PlaceRequest extends AsyncTask<String, Integer, JSONArray> {
                 String place_id = jsonObject.getString("place_id");
                 String vicinity = jsonObject.getString("vicinity");
 
-                Place p = new Place(latLng, icon, id, name, place_id, vicinity);
+                Place p = new Place(latLng, icon, id, name, place_id, vicinity, idSearch);
 
                 JSONArray types = jsonObject.getJSONArray("types");
                 List<String> typesString = new ArrayList<String>(types.length());
@@ -117,7 +126,7 @@ public class PlaceRequest extends AsyncTask<String, Integer, JSONArray> {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    new PlaceRequest(PlaceRequest.this.context).execute(url);
+                    new PlaceRequest(PlaceRequest.this.context, requestCount, idSearch).execute(url);
                 }
             }, 2000);
 
