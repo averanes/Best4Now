@@ -543,7 +543,7 @@ public class MainActivity extends AppCompatActivity {
                         mapsActive =true;
                     }
                     else{
-                        maps.searchNearbyPlaces();
+                        maps.showPositionInMapAndSearchWeather(maps.mainPlace);
                     }
 
                 }
@@ -590,7 +590,7 @@ public class MainActivity extends AppCompatActivity {
             this.account = account;
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
 
-            showMessage("" + account.getDisplayName());
+            //showMessage("" + account.getDisplayName());
 
             showMapa();
         }
