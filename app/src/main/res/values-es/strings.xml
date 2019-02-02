@@ -85,19 +85,19 @@
 
     <string name="here_some_recommendations">Aquí tienes algunas recomendaciones</string>
 
-    <string name="recommended_places">si raccomandano posti diversi per tipo e condizioni attuali.</string>
+    <string name="recommended_places">se recomiendan diferentes lugares para el tipo y condiciones actuales.</string>
 
     <string name="place">Lugar</string>
 
     <string name="share_via">Compartir vía</string>
 
-    <string name="recommendation_not_available">Recommendación no disponible</string>
+    <string name="recommendation_not_available">Recomendación no disponible</string>
 
     <string name="hello">Hola</string>
 
     <string name="need_login_first">Necesita iniciar sesión primeramente.</string>
 
-    <string name="copy_error">Errore di copia</string>
+    <string name="copy_error">Error de copia</string>
 
     <string name="connection_problem">Problemas con la conexión, revísela por favor.</string>
 

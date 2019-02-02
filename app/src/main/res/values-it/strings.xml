@@ -11,13 +11,13 @@
 
     <string name="morning_horario">Mattina</string>
     <string name="afternoon_horario">Pomeriggio</string>
-    <string name="night_horario">Notte</string>
-    <string name="deep_night">Mattina presto</string>
+    <string name="night_horario">Sera</string>
+    <string name="deep_night">Notte</string>
 
     <string-array name="kind_recommendation_list">
         <item>Non consigliato</item>
         <item>Raccomandazione normale</item>
-        <item>Alto raccomandato</item>
+        <item>Raccomandazione alta</item>
         <item>Raccomandazione molto alta</item>
     </string-array>
 
@@ -25,7 +25,7 @@
 
     <string name="center_search_nearby_place">Punto per cercare posto nelle vicinanze</string>
 
-    <string name="temperature">Temperature</string>
+    <string name="temperature">Temperatura</string>
 
     <string name="celsius_degrees">°C </string>
 
@@ -83,9 +83,9 @@
 
     <string name="recommended_place_with_data">Luoghi consigliati con questi dati.</string>
 
-    <string name="here_some_recommendations">Here, you have some recomendations</string>
+    <string name="here_some_recommendations">Qui hai alcune raccomandazioni</string>
 
-    <string name="recommended_places">it is recommended you different places by type with the conditions now.</string>
+    <string name="recommended_places">ti raccomandiamo diversi posti per tipo con le condizioni ora.</string>
 
     <string name="place">Place</string>
 
@@ -97,7 +97,7 @@
 
     <string name="need_login_first">Devi prima effettuare il login.</string>
 
-    <string name="copy_error">Copying error</string>
+    <string name="copy_error">Errore di copia</string>
 
     <string name="connection_problem">Problemi con la connessione, si prega di rivederlo.</string>
 
