@@ -1,5 +1,6 @@
 package com.adoble.best4now.util;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +12,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
 import android.util.Log;
 
 public class ExternalDbOpenHelper extends SQLiteOpenHelper {
@@ -130,6 +132,31 @@ public class ExternalDbOpenHelper extends SQLiteOpenHelper {
                     SQLiteDatabase.OPEN_READWRITE);
         }
         return database;
+    }
+
+    @Override
+    public void onConfigure(SQLiteDatabase db) {
+
+        super.onConfigure(db);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            db.disableWriteAheadLogging();
+
+            try {
+                InputStream externalDbStream = context.getAssets().open(DB_NAME);
+                String outFileName = DB_PATH + DB_NAME;
+
+                //xxx.db-shm, xxx.db-wal
+
+                new File(outFileName+"-shm").deleteOnExit();
+                new File(outFileName+"-wal").deleteOnExit();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+
+        }
     }
 
     @Override

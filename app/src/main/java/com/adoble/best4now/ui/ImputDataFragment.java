@@ -186,7 +186,7 @@ public class ImputDataFragment extends Fragment {
 
         String result= welcome+ this.getResources().getString(R.string.here_some_recommendations) + ":\n\n";
         for (int i = 0; i < 6; i++) {
-            result+= TypePlace.getTypeDescription(i) +" ("+Place.getRecomendedDescription(m.getApplicationContext(), m.predictionCalculated[i+7])+")\n";
+            result+= TypePlace.getTypeDescription(i) +" ("+Place.getRecomendedDescription( m.predictionCalculated[i+7])+")\n";
         }
 
 

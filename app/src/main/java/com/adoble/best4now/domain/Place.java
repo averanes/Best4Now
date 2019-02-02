@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.adoble.best4now.R;
+import com.adoble.best4now.ui.MainActivity;
 import com.adoble.best4now.util.TypePlace;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -164,19 +165,19 @@ public class Place {
 
     public String getRecomendedDescription(Context context) {
 
-        return getRecomendedDescription(context, recomended);
+        return getRecomendedDescription(recomended);
     }
 
-    public static String getRecomendedDescription(Context context, int recomended) {
+    public static String getRecomendedDescription(int recomended) {
 
 
-        String[] language = context.getResources().getStringArray(R.array.kind_recommendation_list);
+        String[] language = MainActivity.mainActivity.getResources().getStringArray(R.array.kind_recommendation_list);
 
         recomended++;
         if(recomended >= 0 && recomended < language.length)
         return language[recomended];
 
-        return context.getResources().getString(R.string.recommendation_not_available);
+        return MainActivity.mainActivity.getResources().getString(R.string.recommendation_not_available);
     }
 
     public void setRecomended(int recomended) {

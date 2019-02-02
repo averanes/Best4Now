@@ -1,5 +1,7 @@
 package com.adoble.best4now.domain;
 
+import android.content.Context;
+
 import com.adoble.best4now.R;
 import com.adoble.best4now.ui.MainActivity;
 

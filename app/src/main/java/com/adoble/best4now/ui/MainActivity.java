@@ -12,6 +12,7 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -74,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+
+        updateResourcesLocaleLegacy(this); //para cargar el idioma de la aplicacion
 
         mainActivity = this;
 
@@ -244,12 +247,12 @@ public class MainActivity extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, ImputDataFragment.newInstance()).commit();
                 // User chose the "Settings" item, show the app settings UI...
 
-                mapsActive = true;
+                mapsActive = false;
                 return true;
 
             case R.id.action_nearby_places:
 
-                if (maps != null) {
+                if (mapsActive && maps != null) {
 
                     //maps.updateLastKnowLocation();
                     // maps.showLastKnowLocation();
@@ -312,18 +315,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    int selectedOption=-1;
+    int selectedOption;
     public void showDialogLanguage() {
+        selectedOption=-1;
+
         String[] languageTem = {"EN", "IT", "ES"};
 
         SharedPreferences prfs = getSharedPreferences("AUTHENTICATION_FILE_NAME", Context.MODE_PRIVATE);
-        String lang = prfs.getString("language", "EN");
-
+        String lang = prfs.getString("language", "");
 
         switch (lang) {
-            case "IT":
+            case "it":
                 languageTem = new String[]{ "IT", "EN", "ES"};  break;
-            case "ES":
+            case "es":
                 languageTem = new String[]{ "ES", "EN", "IT"};  break;
         }
 
@@ -347,16 +351,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(selectedOption!=-1){
-                    showMessage(getResources().getString(R.string.restart_application));
+
 
                     SharedPreferences.Editor edit =  getSharedPreferences("AUTHENTICATION_FILE_NAME", Context.MODE_PRIVATE).edit();
 
-                    edit.putString("language", language[selectedOption]);
+                    edit.putString("language", language[selectedOption].toLowerCase());
                     edit.commit();
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                         updateResourcesLocale(MainActivity.this, new Locale(language[selectedOption].toLowerCase()));
-                    } else updateResourcesLocaleLegacy(MainActivity.this, new Locale(language[selectedOption].toLowerCase()));
+                    updateResourcesLocaleLegacy(MainActivity.this);
+
+                    showMessage(getResources().getString(R.string.restart_application));
                 }
 
                 dialog.cancel();
@@ -377,25 +381,40 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // @SuppressWarnings("deprecation")
+    private void updateResourcesLocaleLegacy(Context context) {
+        String lang = getSharedPreferences("AUTHENTICATION_FILE_NAME", Context.MODE_PRIVATE).getString("language", "");
+        if (lang.isEmpty()){
+            lang = Locale.getDefault().getLanguage().toLowerCase();
+        }
+
+        Locale locale =  new Locale(lang);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            updateResourcesLocale(MainActivity.this, locale);
+            return;
+        }
+
+
+        Resources resources = context.getResources();
+        Configuration configuration = resources.getConfiguration();
+        configuration.locale = locale;
+        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+
+    }
+
     @TargetApi(Build.VERSION_CODES.N)
-    private Context updateResourcesLocale(Context context, Locale locale) {
+    private void updateResourcesLocale(Context context, Locale locale) {
         Configuration configuration = context.getResources().getConfiguration();
         configuration.setLocale(locale);
 
         getBaseContext().getResources().updateConfiguration(configuration,
                 getBaseContext().getResources().getDisplayMetrics());
 
-        return context.createConfigurationContext(configuration);
     }
 
-   // @SuppressWarnings("deprecation")
-    private Context updateResourcesLocaleLegacy(Context context, Locale locale) {
-        Resources resources = context.getResources();
-        Configuration configuration = resources.getConfiguration();
-        configuration.locale = locale;
-        resources.updateConfiguration(configuration, resources.getDisplayMetrics());
-        return context;
-    }
+
 
     public List<Integer> getSelectedRecommendations() {
         return selectedRecommendations;
@@ -516,9 +535,21 @@ public class MainActivity extends AppCompatActivity {
                 Place place = Autocomplete.getPlaceFromIntent(data);
                 Log.i(getResources().getString(R.string.app_name), getResources().getString(R.string.place) + ": " + place.getName() + ", " + place.getId());
 
-                MapsFragment.mainPlace = new com.adoble.best4now.domain.Place(place.getLatLng());
-                showMapaAndSearchNearbyPlaces();
+                if(place!=null){
+                    MapsFragment.mainPlace = new com.adoble.best4now.domain.Place(place.getLatLng());
 
+                    if(!isShowingMap()){
+                        showMapaAndSearchNearbyPlaces();
+                        mapsActive =true;
+                    }
+                    else{
+                        maps.searchNearbyPlaces();
+                    }
+
+                }
+
+
+                //showMessage("onActivityResult OKOK");
 
             } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
                 // TODO: Handle the error.
@@ -581,6 +612,12 @@ public class MainActivity extends AppCompatActivity {
             maps.mMap.setMyLocationEnabled(true);
             maps.mMap.getUiSettings().setMyLocationButtonEnabled(true);
         }
+    }
+
+    public boolean isShowingMap(){
+
+
+        return (maps!=null && mapsActive);
     }
 
 }

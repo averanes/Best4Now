@@ -30,13 +30,13 @@ public class TypePlace {
             if(type.equals("restaurant") || type.equals("food")){
                 return 1;
             }
-            if(type.equals("park") || type.equals("rv_park")  || type.equals("zoo")|| type.equals("amusement_park")){
+            if(type.equals("park") || type.equals("rv_park")  || type.equals("zoo") || type.equals("amusement_park")  || type.equals("spa")){
                 return 2;
             }
             if(type.equals("movie_theater") || type.equals("movie_rental")){
                 return 3;
             }
-            if(type.equals("night_club") || type.equals("casino")){
+            if(type.equals("night_club") || type.equals("casino") || type.equals("lodging")){
                 return 4;
             }
             if(type.equals("museum") || type.equals("art_gallery") ){
@@ -47,14 +47,14 @@ public class TypePlace {
         return -1;
     }
 
-    public static String getTypeDescriptionTranslate(int type){
+    public static String getTypeDescriptionGoogle(int type){
 
         switch (type){
             case 0: return "bar, cafe, liquor_store";
             case 1: return "restaurant food";
-            case 2: return "park, rv_park, zoo, amusement_park";
+            case 2: return "park, rv_park, zoo, amusement_park, spa";
             case 3: return "movie_theater, movie_rental";
-            case 4: return "night_club, casino";
+            case 4: return "night_club, casino lodging";
         }
         return "museum, art_gallery";
 
