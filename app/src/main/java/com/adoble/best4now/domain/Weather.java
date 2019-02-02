@@ -92,10 +92,10 @@ public class Weather {
 
     public void setDay(long dayLong) {
 
-
+/*
         long tiempoActual = System.currentTimeMillis();
 
-        dayLong+=tiempoActual-dayLong;
+        dayLong+=tiempoActual-dayLong;*/
 
 
         this.day = new GregorianCalendar(new Locale("CU"));

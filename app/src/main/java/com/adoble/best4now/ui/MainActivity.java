@@ -230,6 +230,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(account == null){
+            showMessage("You need login firstly.");
+            return super.onOptionsItemSelected(item);
+        }
         switch (item.getItemId()) {
             case R.id.action_input_data:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, ImputDataFragment.newInstance()).commit();

@@ -133,7 +133,7 @@ public class MapsFragment extends MapFragment implements OnMapReadyCallback, Loc
                 if (marker.equals(mainPlace.getMarker()))
                 {
                     //handle click here
-                 MainActivity.mainActivity.showMessage("CLIC REALIZAR ACCION");
+                // MainActivity.mainActivity.showMessage("CLIC REALIZAR ACCION");
 
                 }
 

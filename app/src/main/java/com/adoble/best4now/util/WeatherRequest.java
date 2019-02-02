@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import com.adoble.best4now.R;
 import com.adoble.best4now.domain.Weather;
 import com.adoble.best4now.ui.MainActivity;
+import com.adoble.best4now.ui.MapsFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
@@ -98,17 +99,14 @@ public class WeatherRequest extends AsyncTask<LatLng, Integer, Weather> {
 
 
             //************obtain the time ***********
-           /* GregorianCalendar g=new GregorianCalendar();
-            long timestamp = g.getTimeInMillis()/1000 + g.getTimeZone().getRawOffset()/1000; // Current UTC date/time expressed as seconds since midnight, January 1, 1970 UTC
+            GregorianCalendar g=new GregorianCalendar();
+            long timestamp = g.getTimeInMillis()/1000; // Current UTC date/time expressed as seconds since midnight, January 1, 1970 UTC
 
-            String fullCurrentUrlTime = "https://maps.googleapis.com/maps/api/timezone/json?location="+latLng[0].latitude + "," + latLng[0].longitude+"&timestamp="+;
+            String fullCurrentUrlTime = "https://maps.googleapis.com/maps/api/timezone/json?location="+latLng[0].latitude + "," + latLng[0].longitude+"&timestamp="+timestamp+"&key="+ MainActivity.mainActivity.getString(R.string.google_maps_key);
 
-            String fullCurrentUrl2 = basicUrl + currentUrl + "lat=" + latLng[0].latitude + "&lon=" + latLng[0].longitude + "&appid=" + MainActivity.mainActivity.getString(R.string.open_weather_map_key);
+                URL url2 = new URL(fullCurrentUrlTime);
 
-
-                URL url2 = new URL(fullCurrentUrl);
-
-                HttpURLConnection httpURLConnection2 = (HttpURLConnection) url.openConnection();
+                HttpURLConnection httpURLConnection2 = (HttpURLConnection) url2.openConnection();
                 httpURLConnection2.setRequestMethod("GET");
                 httpURLConnection2.connect();
 
@@ -116,10 +114,22 @@ public class WeatherRequest extends AsyncTask<LatLng, Integer, Weather> {
                 StringBuilder stringBuilder2 = new StringBuilder("");
                 BufferedReader bufferedReader2 = new BufferedReader(new InputStreamReader(httpURLConnection2.getInputStream()));
                 while ((line2 = bufferedReader2.readLine()) != null) {
-                    stringBuilder.append(line2);
+                    stringBuilder2.append(line2);
                 }
 
-                httpURLConnection.disconnect();*/
+
+             jsonObject = new JSONObject(stringBuilder2.toString()); // convert returned JSON string to JSON object
+
+                String status =jsonObject.getString("status");
+
+                long rawOffset =jsonObject.getLong("rawOffset");
+
+                long offsets =jsonObject.getLong("dstOffset") * 1000 + rawOffset * 1000; // get DST and time zone offsets in milliseconds
+
+
+                 currentWeather.setDay(System.currentTimeMillis() + offsets - (new GregorianCalendar().getTimeZone().getRawOffset()));
+
+                httpURLConnection2.disconnect();
 
             return currentWeather;
 
