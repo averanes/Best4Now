@@ -2,8 +2,15 @@ package com.adoble.best4now.ui;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -11,10 +18,15 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +42,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -185,11 +199,11 @@ public class MapsFragment extends MapFragment implements OnMapReadyCallback, Loc
             markerOptions.title(MainActivity.mainActivity.getString(R.string.center_search_nearby_place));
         }
 
+
         Marker m = mMap.addMarker(markerOptions);
         m.showInfoWindow();
         // Placing a marker on the touched position
         newPlace.setMarker(m);
-        //.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(newPlace.getLocation(),
                 MapsFragment.this.zoom), 3000, null);
@@ -444,6 +458,9 @@ public void onLocationChanged(Location location) {
 
         MainActivity.mainActivity.startActivity(Intent.createChooser(sharingIntent, "Share via"/*this.getResources().getString(R.string.share_via)*/));
     }
+
+
+
 }
 
 
