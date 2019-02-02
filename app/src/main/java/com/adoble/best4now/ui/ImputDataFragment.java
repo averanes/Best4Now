@@ -40,7 +40,7 @@ public class ImputDataFragment extends Fragment {
 
         final Spinner dropdownSex = view.findViewById(R.id.spinnerSex);
         //create a list of items for the spinner.
-        String[] itemsSex = new String[]{"Female", "Male", "Joint"};
+        String[] itemsSex = this.getResources().getStringArray(R.array.gender_list);
         ArrayAdapter adapterSex = new ArrayAdapter<String>(MainActivity.mainActivity, android.R.layout.simple_spinner_dropdown_item, itemsSex);
         //set the spinners adapter to the previously created one.
         dropdownSex.setAdapter(adapterSex);
@@ -48,13 +48,13 @@ public class ImputDataFragment extends Fragment {
 
 
         final Spinner dropdownAge = view.findViewById(R.id.spinnerAge);
-        String[] itemsAge = new String[]{"0-15", "16-45", "46..."};
+        String[] itemsAge = this.getResources().getStringArray(R.array.grouped_age_list);
         ArrayAdapter adapterAge = new ArrayAdapter<String>(MainActivity.mainActivity, android.R.layout.simple_spinner_dropdown_item, itemsAge);
         dropdownAge.setAdapter(adapterAge);
         dropdownAge.setSelection(MainActivity.mainActivity.getInputDataCriteria().getAge(), true);
 
         final Spinner dropdownPersons = view.findViewById(R.id.spinnerPersons);
-        String[] itemsPersons = new String[]{"1", "2", "Group"};
+        String[] itemsPersons = this.getResources().getStringArray(R.array.amount_person_list);
         ArrayAdapter adapterPersons = new ArrayAdapter<String>(MainActivity.mainActivity, android.R.layout.simple_spinner_dropdown_item, itemsPersons);
         dropdownPersons.setAdapter(adapterPersons);
         dropdownPersons.setSelection(MainActivity.mainActivity.getInputDataCriteria().getPersons(), true);
@@ -132,14 +132,14 @@ public class ImputDataFragment extends Fragment {
             ((ImageView) view.findViewById(R.id.imageView)).setImageResource(WeatherRequest.getIconByWeatherHorary(MainActivity.mainActivity, weather.getWeatherConsideration(), weather.getHorarioConsideration()));
 
 
-            String value="Temperature: "+ ((long)weather.getTemperature())+"°C "+Weather.temperatureConsiderationName(weather.getTemperatureConsideration());
+            String value= this.getResources().getString(R.string.temperature) + ": "+ ((long)weather.getTemperature())+"°C "+Weather.temperatureConsiderationName(weather.getTemperatureConsideration());
             ((TextView) view.findViewById(R.id.textViewTemperature)).setText(value);
 
-            value="Weather: "+weather.getWeatherDescription()+" "+Weather.weatherConsiderationName(weather.getWeatherConsideration());
+            value=this.getResources().getString(R.string.weather) + ": "+weather.getWeatherDescription()+" "+Weather.weatherConsiderationName(weather.getWeatherConsideration());
             ((TextView) view.findViewById(R.id.textViewWeather)).setText(value);
 
             //SimpleDateFormat s = new SimpleDateFormat("");
-            value="Horary: "+weather.getDay().get(Calendar.HOUR_OF_DAY)+":"+weather.getDay().get(Calendar.MINUTE)+" "+Weather.horarioConsiderationName(weather.getHorarioConsideration());
+            value=this.getResources().getString(R.string.schedule) + ": "+weather.getDay().get(Calendar.HOUR_OF_DAY)+":"+weather.getDay().get(Calendar.MINUTE)+" "+Weather.horarioConsiderationName(weather.getHorarioConsideration());
             ((TextView) view.findViewById(R.id.textViewHour)).setText(value);
         }
 
@@ -174,12 +174,12 @@ public class ImputDataFragment extends Fragment {
 
         String welcome = "";
         if(MainActivity.mainActivity.account!=null &&  MainActivity.mainActivity.account.getDisplayName() != null ){
-            welcome = "Hello "+MainActivity.mainActivity.account.getDisplayName()+", it is recommended you different place by type with the conditions now.\n";
+            welcome = "Hello "+MainActivity.mainActivity.account.getDisplayName()+", " + this.getResources().getString(R.string.recommended_places) + "\n";
         }else{
-            welcome="Place recomendation with this data.\n\n";
+            welcome=this.getResources().getString(R.string.recommended_place_with_data) + "\n\n";
         }
 
-        String result= welcome+"Here you have some recomendation:\n\n";
+        String result= welcome+ this.getResources().getString(R.string.here_some_recommendations) + ":\n\n";
         for (int i = 0; i < 6; i++) {
             result+= TypePlace.getTypeDescription(i) +" ("+Place.getRecomendedDescription(m.getApplicationContext(), m.predictionCalculated[i+7])+")\n";
         }

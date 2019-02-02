@@ -81,9 +81,17 @@
         <item>Grupo</item>
     </string-array>
 
-    <string name="recommended_place_with_data">Lugares recomendados con estos datos</string>
+    <string name="recommended_place_with_data">Lugares recomendados con estos datos.</string>
+
+    <string name="here_some_recommendations">Aquí tienes algunas recomendaciones</string>
+
+    <string name="recommended_places">si raccomandano posti diversi per tipo e condizioni attuali.</string>
 
     <string name="place">Lugar</string>
+
+    <string name="share_via">Compartir vía</string>
+
+    <string name="recommendation_not_available">Recommendación no disponible</string>
 
 </resources>
 
