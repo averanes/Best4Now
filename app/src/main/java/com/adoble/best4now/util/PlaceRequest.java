@@ -1,10 +1,12 @@
 package com.adoble.best4now.util;
 
+import android.Manifest;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
 
 import com.adoble.best4now.domain.Place;
+import com.adoble.best4now.ui.MainActivity;
 import com.adoble.best4now.ui.MapsFragment;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -58,6 +60,11 @@ public class PlaceRequest extends AsyncTask<String, Integer, JSONArray> {
     @Override
     protected JSONArray doInBackground(String... params) {
         try {
+              if(!Permissions.isInternetAvailable()){
+                  return  null;
+                }
+
+
             URL url = new URL(params[0]);
 
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -86,6 +93,12 @@ public class PlaceRequest extends AsyncTask<String, Integer, JSONArray> {
 
     @Override
     protected void onPostExecute(JSONArray jsonArray) {
+
+       if(jsonArray == null) {
+           Permissions.showMessageErrorConexion();
+           return;
+       }
+
         //if(progressBar!=null)progressBar.cancel(); //setVisibility(View.GONE);
         requestCount++;
         try {

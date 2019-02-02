@@ -1,14 +1,17 @@
 package com.adoble.best4now.ui;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +26,7 @@ import com.adoble.best4now.R;
 import com.adoble.best4now.domain.InputDataCriteria;
 import com.adoble.best4now.domain.Weather;
 import com.adoble.best4now.util.ExternalDbOpenHelper;
+import com.adoble.best4now.util.Permissions;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -558,6 +562,24 @@ public class MainActivity extends AppCompatActivity {
             showMessage("" + account.getDisplayName());
 
             showMapa();
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+
+        for (int i = 0; i < permissions.length; i++) {
+            if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                return;
+            }
+        }
+
+        if (requestCode == Permissions.location_permission) {
+            maps.mMap.setMyLocationEnabled(true);
+            maps.mMap.getUiSettings().setMyLocationButtonEnabled(true);
         }
     }
 

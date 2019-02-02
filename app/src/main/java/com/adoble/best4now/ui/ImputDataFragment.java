@@ -1,5 +1,6 @@
 package com.adoble.best4now.ui;
 
+import android.Manifest;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +19,7 @@ import com.adoble.best4now.R;
 import com.adoble.best4now.domain.InputDataCriteria;
 import com.adoble.best4now.domain.Place;
 import com.adoble.best4now.domain.Weather;
+import com.adoble.best4now.util.Permissions;
 import com.adoble.best4now.util.TypePlace;
 import com.adoble.best4now.util.WeatherRequest;
 

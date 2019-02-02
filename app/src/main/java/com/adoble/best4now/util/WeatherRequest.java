@@ -1,5 +1,6 @@
 package com.adoble.best4now.util;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -42,6 +43,11 @@ public class WeatherRequest extends AsyncTask<LatLng, Integer, Weather> {
 
     @Override
     protected Weather doInBackground(LatLng... latLng) {
+
+        if(!Permissions.isInternetAvailable()){
+            return null;
+        }
+
         String fullCurrentUrl = basicUrl + currentUrl + "lat=" + latLng[0].latitude + "&lon=" + latLng[0].longitude + "&appid=" + MainActivity.mainActivity.getString(R.string.open_weather_map_key);
 
         try {
@@ -149,8 +155,11 @@ public class WeatherRequest extends AsyncTask<LatLng, Integer, Weather> {
     protected void onPostExecute(Weather weatherP) {
         super.onPostExecute(weatherP);
 
-        if(weatherP!=null)
+        if(weatherP == null){
+            Permissions.showMessageErrorConexion();
+        }else
             MainActivity.mainActivity.setWeather(weatherP);
+
     }
 
     public ArrayList<Weather> getDailyWeather() {

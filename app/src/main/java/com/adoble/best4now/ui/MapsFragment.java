@@ -97,6 +97,7 @@ public class MapsFragment extends MapFragment implements OnMapReadyCallback, Loc
             mMap.setMyLocationEnabled(true);
         }
 
+
         if (PlaceRequest.PLACES_REQUEST.isEmpty())
             PlaceRequest.PLACES_REQUEST = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=" + MapsFragment.main.getString(R.string.google_maps_key)+ "&radius=" + radius + "&language=" + language;
 
@@ -235,6 +236,7 @@ public class MapsFragment extends MapFragment implements OnMapReadyCallback, Loc
     public static int searchNumber=0;
     @SuppressLint("MissingPermission")
     public void searchNearbyPlaces() {
+
         searchNumber++;
         String url = PlaceRequest.PLACES_REQUEST  + "&location=" + mainPlace.getLocation().latitude + "," + mainPlace.getLocation().longitude;
 
@@ -289,22 +291,7 @@ public class MapsFragment extends MapFragment implements OnMapReadyCallback, Loc
     }
 
 
-    @SuppressLint("MissingPermission")
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-
-        for (int i = 0; i < permissions.length; i++) {
-            if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
-                return;
-            }
-        }
-
-        if (requestCode == Permissions.location_permission) {
-            mMap.setMyLocationEnabled(true);
-        }
-    }
 
     @SuppressLint("MissingPermission")
     public void showLastKnowLocation() {
