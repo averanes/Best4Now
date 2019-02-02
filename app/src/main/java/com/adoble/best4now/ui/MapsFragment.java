@@ -442,7 +442,7 @@ public void onLocationChanged(Location location) {
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, ShareSub);
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, uri);
 
-        MainActivity.mainActivity.startActivity(Intent.createChooser(sharingIntent, this.getResources().getString(R.string.share_via)));
+        MainActivity.mainActivity.startActivity(Intent.createChooser(sharingIntent, "Share via"/*this.getResources().getString(R.string.share_via)*/));
     }
 }
 
