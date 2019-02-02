@@ -9,7 +9,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
     app:showAsAction="ifRoom" />
 <item
     android:id="@+id/action_input_data"
-    android:icon="@mipmap/outline_settings_black_18dp"
+    android:icon="@mipmap/baseline_tune_black_18dp"
     android:title="@string/input_parameters"
     app:showAsAction="ifRoom"/>
 
