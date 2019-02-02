@@ -64,7 +64,7 @@
     <string name="schedule">Horario</string>
 
     <string-array name="gender_list">
-        <item>Femmino</item>
+        <item>Femenino</item>
         <item>Masculino</item>
         <item>Grupo</item>
     </string-array>
