@@ -15,6 +15,8 @@ public class Weather {
     private int id;
     private String mainWeather;
 
+    private String timeZoneId;
+
     /*
     0 (despejado - tomaremos rango de los id q empiecen con 8)
     1 (poca lluvia - rango de id q empiecen con 3)
@@ -88,6 +90,14 @@ public class Weather {
 
     public GregorianCalendar getDay() {
         return day;
+    }
+
+    public String getTimeZoneId() {
+        return timeZoneId;
+    }
+
+    public void setTimeZoneId(String timeZoneId) {
+        this.timeZoneId = timeZoneId;
     }
 
     public void setDay(long dayLong) {

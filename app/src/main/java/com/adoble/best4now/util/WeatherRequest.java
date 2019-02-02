@@ -127,7 +127,12 @@ public class WeatherRequest extends AsyncTask<LatLng, Integer, Weather> {
                 long offsets =jsonObject.getLong("dstOffset") * 1000 + rawOffset * 1000; // get DST and time zone offsets in milliseconds
 
 
-                 currentWeather.setDay(System.currentTimeMillis() + offsets - (new GregorianCalendar().getTimeZone().getRawOffset()));
+            currentWeather.setDay(System.currentTimeMillis() + offsets - (new GregorianCalendar().getTimeZone().getRawOffset()));
+
+            String timeZoneId = jsonObject.getString("timeZoneId"); //"America/Los_Angeles" or "Australia/Sydney".
+            String timeZoneName = jsonObject.getString("timeZoneName"); //"Pacific Daylight Time" or "Australian Eastern Daylight Time"
+
+            currentWeather.setTimeZoneId(timeZoneName + "\n"+timeZoneId);
 
                 httpURLConnection2.disconnect();
 

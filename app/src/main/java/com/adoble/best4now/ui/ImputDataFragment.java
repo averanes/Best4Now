@@ -140,6 +140,9 @@ public class ImputDataFragment extends Fragment {
 
             //SimpleDateFormat s = new SimpleDateFormat("");
             value=this.getResources().getString(R.string.schedule) + ": "+weather.getDay().get(Calendar.HOUR_OF_DAY)+":"+weather.getDay().get(Calendar.MINUTE)+" "+Weather.horarioConsiderationName(weather.getHorarioConsideration());
+
+            if(weather.getTimeZoneId()!=null)
+            value+="\n"+weather.getTimeZoneId();
             ((TextView) view.findViewById(R.id.textViewHour)).setText(value);
         }
 
