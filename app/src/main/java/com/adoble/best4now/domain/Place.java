@@ -176,7 +176,7 @@ public class Place {
         if(recomended >= 0 && recomended < language.length)
         return language[recomended];
 
-        return "Recommendation Unavailable";
+        return context.getResources().getString(R.string.recommendation_not_available);
     }
 
     public void setRecomended(int recomended) {
