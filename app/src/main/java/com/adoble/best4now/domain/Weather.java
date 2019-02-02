@@ -108,7 +108,7 @@ public class Weather {
         dayLong+=tiempoActual-dayLong;*/
 
 
-        this.day = new GregorianCalendar(new Locale("CU"));
+        this.day = new GregorianCalendar();
         this.day.setTimeInMillis(dayLong);
         int hour = this.day.get(Calendar.HOUR_OF_DAY);
 

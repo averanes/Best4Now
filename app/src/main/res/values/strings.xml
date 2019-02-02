@@ -93,5 +93,27 @@
 
     <string name="recommendation_not_available">Recommendation not available</string>
 
+    <string name="hello">Hello</string>
+
+    <string name="need_login_first">You need login firstly.</string>
+
+    <string name="copy_error">Copying error</string>
+
+    <string name="connection_problem">Connection problem, check it please.</string>
+
+    <string name="bar_coffee_liquor_store">bar, coffee, liquor store</string>
+
+    <string name="restaurant_food">restaurant, food</string>
+
+    <string name="park_rv_park_zoo_amusement_park">park, rv park, zoo, amusement park</string>
+
+    <string name="movie_theater_movie_rental">movie theater, movie rental</string>
+
+    <string name="night_club_casino">night club, casino</string>
+
+    <string name="museum_art_gallery">museum, art gallery</string>
+
+    <string name="show_recommended_places_on_map">Show recommended places on map</string>
+
 </resources>
 

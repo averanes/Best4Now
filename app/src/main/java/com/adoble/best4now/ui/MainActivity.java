@@ -236,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if(account == null){
-            showMessage("You need login firstly.");
+            showMessage(this.getResources().getString(R.string.need_login_first));
             return super.onOptionsItemSelected(item);
         }
         switch (item.getItemId()) {

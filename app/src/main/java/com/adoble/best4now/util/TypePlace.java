@@ -1,5 +1,8 @@
 package com.adoble.best4now.util;
 
+import com.adoble.best4now.R;
+import com.adoble.best4now.ui.MainActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +47,7 @@ public class TypePlace {
         return -1;
     }
 
-    public static String getTypeDescription(int type){
+    public static String getTypeDescriptionTranslate(int type){
 
         switch (type){
             case 0: return "bar, cafe, liquor_store";
@@ -54,6 +57,19 @@ public class TypePlace {
             case 4: return "night_club, casino";
         }
         return "museum, art_gallery";
+
+    }
+
+    public static String getTypeDescription(int type){
+
+        switch (type){
+            case 0: return MainActivity.mainActivity.getResources().getString(R.string.bar_coffee_liquor_store);
+            case 1: return MainActivity.mainActivity.getResources().getString(R.string.restaurant_food);
+            case 2: return MainActivity.mainActivity.getResources().getString(R.string.park_rv_park_zoo_amusement_park);
+            case 3: return MainActivity.mainActivity.getResources().getString(R.string.movie_theater_movie_rental);
+            case 4: return MainActivity.mainActivity.getResources().getString(R.string.night_club_casino);
+        }
+        return MainActivity.mainActivity.getResources().getString(R.string.museum_art_gallery);
 
     }
 

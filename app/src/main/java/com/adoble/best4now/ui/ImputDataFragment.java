@@ -179,7 +179,7 @@ public class ImputDataFragment extends Fragment {
 
         String welcome = "";
         if(MainActivity.mainActivity.account!=null &&  MainActivity.mainActivity.account.getDisplayName() != null ){
-            welcome = "Hello "+MainActivity.mainActivity.account.getDisplayName()+", " + this.getResources().getString(R.string.recommended_places) + "\n";
+            welcome = this.getResources().getString(R.string.hello) + " "+MainActivity.mainActivity.account.getDisplayName()+", " + this.getResources().getString(R.string.recommended_places) + "\n";
         }else{
             welcome=this.getResources().getString(R.string.recommended_place_with_data) + "\n\n";
         }

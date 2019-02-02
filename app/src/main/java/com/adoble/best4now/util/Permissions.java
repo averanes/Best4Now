@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
+import com.adoble.best4now.R;
 import com.adoble.best4now.ui.MainActivity;
 
 import java.net.InetAddress;
@@ -60,7 +61,7 @@ public class Permissions {
     }
 
     public static void showMessageErrorConexion() {
-        MainActivity.mainActivity.showMessage("Problemas con la concexion, chequeela.");
+        MainActivity.mainActivity.showMessage(MainActivity.mainActivity.getResources().getString(R.string.connection_problem));
     }
 
 

@@ -93,4 +93,26 @@
 
     <string name="recommendation_not_available">Raccomandazione non disponibile</string>
 
+    <string name="hello">Ciao</string>
+
+    <string name="need_login_first">Devi prima effettuare il login.</string>
+
+    <string name="copy_error">Copying error</string>
+
+    <string name="connection_problem">Problemi con la connessione, si prega di rivederlo.</string>
+
+    <string name="bar_coffee_liquor_store">bar, caffè, negozio di liquori</string>
+
+    <string name="restaurant_food">ristorante, cibo</string>
+
+    <string name="park_rv_park_zoo_amusement_park">parco, parco vr, zoo, parco divertimenti</string>
+
+    <string name="movie_theater_movie_rental">cinema, noleggio film</string>
+
+    <string name="night_club_casino">discoteca, casinò</string>
+
+    <string name="museum_art_gallery">museo, galleria de arte</string>
+
+    <string name="show_recommended_places_on_map">Mostra i luoghi consigliati sulla mappa</string>
+
 </resources>
