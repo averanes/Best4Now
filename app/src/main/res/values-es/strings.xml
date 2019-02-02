@@ -105,11 +105,11 @@
 
     <string name="restaurant_food">restaurant, comida</string>
 
-    <string name="park_rv_park_zoo_amusement_park">parque, parque vr, zoo, parque de diversiones</string>
+    <string name="park_rv_park_zoo_amusement_park">parque, parque vr, zoo, parque de diversiones,balneario</string>
 
     <string name="movie_theater_movie_rental">cine, alquiler de películas</string>
 
-    <string name="night_club_casino">club nocturno, casino</string>
+    <string name="night_club_casino">club nocturno, casino, hospedaje</string>
 
     <string name="museum_art_gallery">museo, galería de arte</string>
 
