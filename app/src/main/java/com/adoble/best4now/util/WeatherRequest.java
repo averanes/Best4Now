@@ -254,10 +254,10 @@ public class WeatherRequest extends AsyncTask<LatLng, Integer, Weather> {
             break;
             // lluvia ligera (tiempo moderado)
             case '7':
-               if(idWeather <= 761)
+               if(idWeather <= 761 && idWeather != 711)
                 weatConsideration = 1;
                break;
-               case '6':
+            case '6':
                    if(idWeather == 600 || idWeather == 611 || idWeather == 615)
                        weatConsideration = 1;
                    break;
