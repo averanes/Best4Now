@@ -88,6 +88,10 @@ public class ExternalDbOpenHelper extends SQLiteOpenHelper {
         SQLiteDatabase checkDb = null;
         try {
             String path = DB_PATH + DB_NAME;
+
+
+            if(!new File(path).exists()) return false;
+
             checkDb = SQLiteDatabase.openDatabase(path, null,
                     SQLiteDatabase.OPEN_READONLY);
         } catch (SQLException e) {
